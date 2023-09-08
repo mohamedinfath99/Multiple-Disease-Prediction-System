@@ -26,10 +26,10 @@ parkinsons_collection = db['parkinsons_collection']
 
 
 
-diabetes_model = joblib.load('diabetes_model.sav')
-heart_model = joblib.load('heart_disease_model.sav')
+diabetes_model = joblib.load('svm_diabetes_model.sav')
+heart_model = joblib.load('heart_model.sav')
 parkinsons_model = joblib.load('parkinsons_model.sav')
-diabetes_model_new = joblib.load('diabetes_inf99.sav')
+
 
 
 @app.route("/")
@@ -102,174 +102,48 @@ def login_user():
 
 
 
-# @app.route("/api/predict_diabetes", methods=["POST"])
-# def predict_diabetes():
-
-#     patient_name = request.json["patient_name"]
-#     patient_phone = request.json["patient_phone"]
-#     patient_address = request.json["patient_address"]
-#     pregnancies = float(request.json["pregnancies"])
-#     glucose = float(request.json["glucose"])
-#     blood_pressure = float(request.json["blood_pressure"])
-#     skin_thickness = float(request.json["skin_thickness"])
-#     insulin = float(request.json["insulin"])
-#     bmi = float(request.json["bmi"])
-#     diabetes_pedigree_function = float(request.json["diabetes_pedigree_function"])
-#     age = float(request.json["age"])
-
-  
-#     prediction = diabetes_model.predict([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]])
-
-    
-#     if prediction[0] == 1:
-#         diagnosis = 'The person is diabetic'
-#     else:
-#         diagnosis = 'The person is not diabetic'
-
-    
-#     patient_data = {
-#         "Name": patient_name,
-#         "Phone": patient_phone,
-#         "Address": patient_address,
-#         "Pregnancies": pregnancies,
-#         "Glucose": glucose,
-#         "BloodPressure": blood_pressure,
-#         "SkinThickness": skin_thickness,
-#         "Insulin": insulin,
-#         "BMI": bmi,
-#         "DiabetesPedigreeFunction": diabetes_pedigree_function,
-#         "Age": age,
-#         "Diagnosis": diagnosis
-#     }
-#     diabetes_collection.insert_one(patient_data)
-
-#     return jsonify({"diagnosis": diagnosis})
-
-
-# smoking_history_mapping = {
-#     'never': 0,
-#     'No Info': 1,
-#     'current': 2,
-#     'former': 3,
-#     'ever': 4,
-#     'not current': 5
-# }
-
-# gender_mapping = {'Female': 0, 'Male': 1, 'Other': 2}
-
-# @app.route("/api/new/predict_diabetes", methods=["POST"])
-# def predict_diabete():
-#     patient_name = request.json["patient_name"]
-#     patient_phone = request.json["patient_phone"]
-#     patient_address = request.json["patient_address"]
-#     gender = request.json["gender"]
-#     glucose = float(request.json["glucose"])
-#     blood_pressure = float(request.json["blood_pressure"])
-#     skin_thickness = float(request.json["skin_thickness"])
-#     insulin = float(request.json["insulin"])
-#     bmi = float(request.json["bmi"])
-#     diabetes_pedigree_function = float(request.json["diabetes_pedigree_function"])
-#     age = float(request.json["age"])
-#     smoking_history = request.json["smoking_history"]
-
-#     smoking_history = smoking_history_mapping.get(smoking_history, -1)
-#     gender = gender_mapping.get(gender, -1)
-
-#     input_data = [gender, age, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function]
-    
-
-#     input_data_as_numpy_array = np.asarray(input_data).reshape(1, -1)
- 
-#     prediction = diabetes_model_new.predict(input_data_as_numpy_array)
-
-#     if prediction[0] == 1:
-#         diagnosis = 'The person is diabetic'
-#     else:
-#         diagnosis = 'The person is not diabetic'
-
-
-#     patient_data = {
-#         "Name": patient_name,
-#         "Phone": patient_phone,
-#         "Address": patient_address,
-#         "Gender": gender,
-#         "Glucose": glucose,
-#         "BloodPressure": blood_pressure,
-#         "SkinThickness": skin_thickness,
-#         "Insulin": insulin,
-#         "BMI": bmi,
-#         "DiabetesPedigreeFunction": diabetes_pedigree_function,
-#         "Age": age,
-#         "Diagnosis": diagnosis
-#     }
-
-#     diabetes_collection.insert_one(patient_data)
-
-#     return jsonify({"diagnosis": diagnosis})
-
-
-smoking_history_mapping = {
-    'never': 0,
-    'No Info': 1,
-    'current': 2,
-    'former': 3,
-    'ever': 4,
-    'not current': 5
-}
-
-gender_mapping = {'Female': 0, 'Male': 1, 'Other': 2}
-
-
-@app.route("/api/new/predict_diabetes", methods=["POST"])
+@app.route("/api/predict_diabetes", methods=["POST"])
 def predict_diabetes():
-    # Parse input data from the JSON request
+
     patient_name = request.json["patient_name"]
     patient_phone = request.json["patient_phone"]
     patient_address = request.json["patient_address"]
-    gender = request.json["gender"]
-    age = float(request.json["age"])
-    hypertension = float(request.json["hypertension"])
-    heart_disease = float(request.json["heart_disease"])
-    smoking_history = request.json["smoking_history"]
+    pregnancies = float(request.json["pregnancies"])
+    glucose = float(request.json["glucose"])
+    blood_pressure = float(request.json["blood_pressure"])
+    skin_thickness = float(request.json["skin_thickness"])
+    insulin = float(request.json["insulin"])
     bmi = float(request.json["bmi"])
-    HbA1c_level = float(request.json["HbA1c_level"])
-    blood_glucose_level = float(request.json["blood_glucose_level"])
+    diabetes_pedigree_function = float(request.json["diabetes_pedigree_function"])
+    age = float(request.json["age"])
 
-    # Data preprocessing
-    smoking_history = smoking_history_mapping.get(smoking_history, -1)
-    gender = gender_mapping.get(gender, -1)
-    input_data = [gender, age, hypertension, heart_disease, smoking_history, HbA1c_level, bmi, blood_glucose_level]
+  
+    prediction = diabetes_model.predict([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]])
 
-    # Make predictions
-    input_data_as_numpy_array = np.asarray(input_data).reshape(1, -1)
-    prediction = diabetes_model_new.predict(input_data_as_numpy_array)
-
-    # Determine diagnosis
+    
     if prediction[0] == 1:
         diagnosis = 'The person is diabetic'
     else:
         diagnosis = 'The person is not diabetic'
 
-    # Create response JSON
+    
     patient_data = {
         "Name": patient_name,
         "Phone": patient_phone,
         "Address": patient_address,
-        "Gender": gender,
-        "Age": age,
-        "Hypertension": hypertension,
-        "HeartDisease": heart_disease,
-        "SmokingHistory": smoking_history,
+        "Pregnancies": pregnancies,
+        "Glucose": glucose,
+        "BloodPressure": blood_pressure,
+        "SkinThickness": skin_thickness,
+        "Insulin": insulin,
         "BMI": bmi,
-        "HbA1cLevel": HbA1c_level,
-        "BloodGlucoseLevel": blood_glucose_level,
+        "DiabetesPedigreeFunction": diabetes_pedigree_function,
+        "Age": age,
         "Diagnosis": diagnosis
     }
-
-    # You can add code here to store patient_data or perform other actions
+    diabetes_collection.insert_one(patient_data)
 
     return jsonify({"diagnosis": diagnosis})
-
 
 
 
@@ -296,10 +170,15 @@ def predict_heart():
 
     prediction = heart_model.predict([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
 
+    # Print the prediction result to the console
+    print(f"Prediction result for: {prediction}")
+
     if prediction[0] == 1:
         diagnosis = 'The person is having heart disease'
     else:
         diagnosis = 'The person is not having heart disease'
+
+
 
     patient_data = {
         "Name": patient_name,

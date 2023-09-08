@@ -57,7 +57,7 @@ const Header = () => {
 
 
                     <div>
-                        <h1 className='text-[24px] leading-[46px] text-headingColor font-[800] md:text-[26px] md:leading-[70px]'>MediLand Hospital</h1>
+                        <h1 className='text-[24px] leading-[46px] text-[#2b4758] font-[800] md:text-[26px] md:leading-[70px]'>MediLand Hospital</h1>
                     </div>
 
 
