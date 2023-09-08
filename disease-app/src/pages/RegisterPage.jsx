@@ -10,7 +10,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { message } from 'antd';
-import loginImg from '../assets/aaa.avif';
+// import loginImg from '../assets/aaa.avif';
 
 
 
@@ -55,18 +55,18 @@ const RegisterPage = () => {
                 });
         }
     };
-
+    // style={{ backgroundImage: `linear-gradient(181.26deg, rgba(176, 189, 231, 0.5) 1.31%, rgba(59, 54, 120, 0.1) 92.36%), url(${loginImg})`, backgroundSize: 'cover' }}
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-cover" style={{ backgroundImage: `linear-gradient(181.26deg, rgba(176, 189, 231, 0.5) 1.31%, rgba(59, 54, 120, 0.1) 92.36%), url(${loginImg})`, backgroundSize: 'cover' }}>
+        <div className=" flex flex-col items-center justify-center bg-cover" style={{ marginTop: '90px', marginBottom: '90px' }}>
 
             <div className="bg-opacity-80 p-8 rounded-lg shadow-md max-w-md w-full" style={{ backgroundColor: 'rgba(236, 228, 228, 0.78)', width: 'min(calc(100% - 30px), 840px)', marginInline: 'auto', height: 'min(calc(100% - 30px), 476px)' }}>
 
-                <h1 className="roboto-heading mb-4 mt-4 text-center" style={{ color: '#2D6FD1', textTransform: 'uppercase', fontWeight: '800', fontSize: '35px', lineHeight: '46.88px' }}>MediLand Hospital</h1>
-                <p className="inter-heading text-center mt-5 mb-7" style={{ color: '#2D6FD1', textTransform: 'uppercase', fontWeight: '500', fontSize: '24px', lineHeight: '29.05px' }}>Register now</p>
+                <h1 className="roboto-heading text-center" style={{ color: '#2D6FD1', textTransform: 'uppercase', fontWeight: '800', fontSize: '35px', lineHeight: '46.88px' }}>MediLand Hospital</h1>
+                <p className="inter-heading text-center mt-2 mb-7" style={{ color: '#2D6FD1', textTransform: 'uppercase', fontWeight: '500', fontSize: '24px', lineHeight: '29.05px' }}>Register now</p>
 
                 <form className='flex flex-col items-center justify-center' style={{ width: 'min(calc(100% - 10px), 1000px)', marginInline: 'auto' }}>
 
-                    <div className="mb-8 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
+                    <div className="mb-4 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
 
                         <div className="pr-3">
                             <PersonIcon style={{ height: '30px', width: '30px', color: '#2D6FD1' }} />
@@ -90,7 +90,7 @@ const RegisterPage = () => {
                     </div>
 
 
-                    <div className="mb-8 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
+                    <div className="mb-4 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
 
                         <div className="pr-3">
                             <EmailIcon style={{ height: '30px', width: '30px', color: '#2D6FD1' }} />
@@ -114,7 +114,7 @@ const RegisterPage = () => {
                     </div>
 
 
-                    <div className="mb-8 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
+                    <div className="mb-4 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
 
                         <div className="pr-3">
                             <PhoneIcon style={{ height: '30px', width: '30px', color: '#2D6FD1' }} />
@@ -138,7 +138,7 @@ const RegisterPage = () => {
                     </div>
 
 
-                    <div className="mb-8 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
+                    <div className="mb-4 bg-opacity-80 border border-2.5px solid #2C66BE rounded p-5 flex items-center" style={{ height: '55px', width: '100%', backgroundColor: '#05050513', borderBottom: '2px solid #2C66BE', marginInline: 'auto' }}>
 
                         <div className="pr-3">
                             <LockIcon style={{ height: '30px', width: '30px', color: '#2D6FD1' }} />
@@ -171,15 +171,11 @@ const RegisterPage = () => {
 
                 </form>
 
-                <div className="text-center" style={{ marginTop: '22px' }}>
+                <div className="text-center" style={{ marginTop: '15px' }}>
                     <a href="/login" className="hover:underline" style={{ color: '#2C66BE', fontWeight: '500', fontSize: '16px', lineHeight: '20px' }}>Login Here</a>
                 </div>
 
             </div>
-
-            <footer className="roboto-heading fixed bottom-1 w-full text-center text-gray-500" style={{ fontSize: '16px', lineHeight: "19px", color: '#FFFFFF' }}>
-                Copyright © 1996–2023 Mediland Hospital. All rights reserved
-            </footer>
         </div>
     );
 };

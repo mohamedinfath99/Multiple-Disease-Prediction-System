@@ -1,8 +1,8 @@
 
 import Home from './../pages/Home';
 import Services from './../pages/Services';
-import Login from './../pages/Login';
-import Signup from './../pages/Signup';
+import Login from './../pages/LoginPage';
+import Signup from './../pages/RegisterPage';
 import Contact from './../pages/Contact';
 import DoctorDetails from './../pages/Doctor/DoctorDetails';
 import Doctor from './../pages/Doctor/Doctor';

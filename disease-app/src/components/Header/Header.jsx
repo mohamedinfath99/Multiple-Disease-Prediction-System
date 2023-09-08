@@ -1,5 +1,4 @@
-import userImg from '../../assets/images/avatar-icon.png';
-import logo from '../../assets/images/logo.png';
+// import userImg from '../../assets/images/avatar-icon.png';
 import { NavLink, Link } from 'react-router-dom'
 import { BiMenu } from 'react-icons/bi'
 import { useEffect, useRef } from 'react';
@@ -58,7 +57,7 @@ const Header = () => {
 
 
                     <div>
-                        <img src={logo} alt='logoo' />
+                        <h1 className='text-[24px] leading-[46px] text-headingColor font-[800] md:text-[26px] md:leading-[70px]'>MediLand Hospital</h1>
                     </div>
 
 
@@ -84,7 +83,7 @@ const Header = () => {
                         <div className='hidden'>
                             <Link>
                                 <figure className='w-[35px] h-[35px] rounded-full'>
-                                    <img src={userImg} alt='image' className='w-full rounded-full cursor-pointer' />
+                                    {/* <img src={userImg} alt='image' className='w-full rounded-full cursor-pointer' /> */}
                                 </figure>
                             </Link>
                         </div>

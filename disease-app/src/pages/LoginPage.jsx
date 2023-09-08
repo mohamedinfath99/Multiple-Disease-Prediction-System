@@ -5,7 +5,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import loginImg from '../assets/aaa.avif';
+// import loginImg from '../assets/aaa.avif';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { message } from 'antd';
@@ -58,9 +58,9 @@ const LoginPage = () => {
     }
 
     const [showPassword, setShowPassword] = useState(false);
-
+    // style={{ backgroundImage: `linear-gradient(181.26deg, rgba(176, 189, 231, 0.5) 1.31%, rgba(59, 54, 120, 0.1) 92.36%), url(${loginImg})`, backgroundSize: 'cover' }}
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-cover" style={{ backgroundImage: `linear-gradient(181.26deg, rgba(176, 189, 231, 0.5) 1.31%, rgba(59, 54, 120, 0.1) 92.36%), url(${loginImg})`, backgroundSize: 'cover' }}>
+        <div className="w-full flex flex-col items-center justify-center bg-cover" style={{ marginTop: '90px', marginBottom: '90px' }}>
 
             <div className="bg-opacity-80 p-8 rounded-lg shadow-md max-w-md w-full" style={{ backgroundColor: 'rgba(236, 228, 228, 0.78)', width: 'min(calc(100% - 30px), 840px)', marginInline: 'auto', height: 'min(calc(100% - 30px), 476px)' }}>
 
@@ -129,10 +129,6 @@ const LoginPage = () => {
                 </div>
 
             </div>
-
-            <footer className="roboto-heading fixed bottom-1 w-full text-center text-gray-500" style={{ fontSize: '16px', lineHeight: "19px", color: '#fff' }}>
-                Copyright © 1996–2023 Mediland Hospital. All rights reserved
-            </footer>
         </div>
     );
 };
