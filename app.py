@@ -28,7 +28,7 @@ parkinsons_collection = db['parkinsons_collection']
 
 diabetes_model = joblib.load('svm_diabetes_model.sav')
 heart_model = joblib.load('heart_model.sav')
-parkinsons_model = joblib.load('parkinsons_model.sav')
+parkinsons_model = joblib.load('random_forest_parkinsons_model.sav')
 
 
 
@@ -208,77 +208,127 @@ def predict_heart():
 
 
 
+# @app.route("/api/predict_parkinsons", methods=["POST"])
+# def predict_parkinsons():
+
+#     patient_name = request.json["patient_name"]
+#     patient_phone = request.json["patient_phone"]
+#     patient_address = request.json["patient_address"]
+#     fo = float(request.json["MDVP:Fo(Hz)"])
+#     fhi = float(request.json["MDVP:Fhi(Hz)"])
+#     flo = float(request.json["MDVP:Flo(Hz)"])
+#     Jitter_percent = float(request.json["MDVP:Jitter(%)"])
+#     Jitter_Abs = float(request.json["MDVP:Jitter(Abs)"])
+#     RAP = float(request.json["MDVP:RAP"])
+#     PPQ = float(request.json["MDVP:PPQ"])
+#     DDP = float(request.json["Jitter:DDP"])
+#     Shimmer = float(request.json["MDVP:Shimmer"])
+#     Shimmer_dB = float(request.json["MDVP:Shimmer(dB)"])
+#     APQ3 = float(request.json["Shimmer:APQ3"])
+#     APQ5 = float(request.json["Shimmer:APQ5"])
+#     APQ = float(request.json["MDVP:APQ"])
+#     DDA = float(request.json["Shimmer:DDA"])
+#     NHR = float(request.json["NHR"])
+#     HNR = float(request.json["HNR"])
+#     RPDE = float(request.json["RPDE"])
+#     DFA = float(request.json["DFA"])
+#     spread1 = float(request.json["spread1"])
+#     spread2 = float(request.json["spread2"])
+#     D2 = float(request.json["D2"])
+#     PPE = float(request.json["PPE"])
+
+
+#     prediction = parkinsons_model.predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
+
+#     if prediction[0] == 1:
+#         diagnosis = 'The person has Parkinson disease'
+#     else:
+#         diagnosis = 'The person does not have Parkinsons disease'
+
+#     patient_data = {
+#         "Name": patient_name,
+#         "Phone": patient_phone,
+#         "Address": patient_address,
+#         "MDVP:Fo(Hz)": fo,
+#         "MDVP:Fhi(Hz)": fhi,
+#         "MDVP:Flo(Hz)": flo,
+#         "MDVP:Jitter(%)": Jitter_percent,
+#         "MDVP:Jitter(Abs)": Jitter_Abs,
+#         "MDVP:RAP": RAP,
+#         "MDVP:PPQ": PPQ,
+#         "Jitter:DDP": DDP,
+#         "MDVP:Shimmer": Shimmer,
+#         "MDVP:Shimmer(dB)": Shimmer_dB,
+#         "Shimmer:APQ3": APQ3,
+#         "Shimmer:APQ5": APQ5,
+#         "MDVP:APQ": APQ,
+#         "Shimmer:DDA": DDA,
+#         "NHR": NHR,
+#         "HNR": HNR,
+#         "RPDE": RPDE,
+#         "DFA": DFA,
+#         "spread1": spread1,
+#         "spread2": spread2,
+#         "D2": D2,
+#         "PPE": PPE,
+#         "Diagnosis": diagnosis
+
+#     }
+
+#     parkinsons_collection.insert_one(patient_data)
+
+#     return jsonify({"diagnosis": diagnosis})
+
+
+
 @app.route("/api/predict_parkinsons", methods=["POST"])
 def predict_parkinsons():
-
     patient_name = request.json["patient_name"]
     patient_phone = request.json["patient_phone"]
     patient_address = request.json["patient_address"]
-    fo = float(request.json["MDVP:Fo(Hz)"])
-    fhi = float(request.json["MDVP:Fhi(Hz)"])
-    flo = float(request.json["MDVP:Flo(Hz)"])
-    Jitter_percent = float(request.json["MDVP:Jitter(%)"])
-    Jitter_Abs = float(request.json["MDVP:Jitter(Abs)"])
-    RAP = float(request.json["MDVP:RAP"])
-    PPQ = float(request.json["MDVP:PPQ"])
-    DDP = float(request.json["Jitter:DDP"])
-    Shimmer = float(request.json["MDVP:Shimmer"])
-    Shimmer_dB = float(request.json["MDVP:Shimmer(dB)"])
-    APQ3 = float(request.json["Shimmer:APQ3"])
-    APQ5 = float(request.json["Shimmer:APQ5"])
-    APQ = float(request.json["MDVP:APQ"])
-    DDA = float(request.json["Shimmer:DDA"])
-    NHR = float(request.json["NHR"])
-    HNR = float(request.json["HNR"])
-    RPDE = float(request.json["RPDE"])
-    DFA = float(request.json["DFA"])
-    spread1 = float(request.json["spread1"])
-    spread2 = float(request.json["spread2"])
-    D2 = float(request.json["D2"])
-    PPE = float(request.json["PPE"])
+    
+    MDVP_Jitter_percent = float(request.json["MDVP_Jitter_percent"])
+    MDVP_RAP = float(request.json["MDVP_RAP"])
+    MDVP_Shimmer = float(request.json["MDVP_Shimmer"])
+    MDVP_Shimmer_dB = float(request.json["MDVP_Shimmer_dB"])
+    MDVP_APQ = float(request.json["MDVP_APQ"])
+    MDVP_PPQ = float(request.json["MDVP_PPQ"])
+    Shimmer_APQ3 = float(request.json["Shimmer_APQ3"])
+    Shimmer_APQ5 = float(request.json["Shimmer_APQ5"])
 
-
-    prediction = parkinsons_model.predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
-
-    if prediction[0] == 1:
-        diagnosis = 'The person has Parkinson disease'
-    else:
-        diagnosis = 'The person does not have Parkinsons disease'
-
+    # Create a dictionary with the extracted feature values
     patient_data = {
         "Name": patient_name,
         "Phone": patient_phone,
         "Address": patient_address,
-        "MDVP:Fo(Hz)": fo,
-        "MDVP:Fhi(Hz)": fhi,
-        "MDVP:Flo(Hz)": flo,
-        "MDVP:Jitter(%)": Jitter_percent,
-        "MDVP:Jitter(Abs)": Jitter_Abs,
-        "MDVP:RAP": RAP,
-        "MDVP:PPQ": PPQ,
-        "Jitter:DDP": DDP,
-        "MDVP:Shimmer": Shimmer,
-        "MDVP:Shimmer(dB)": Shimmer_dB,
-        "Shimmer:APQ3": APQ3,
-        "Shimmer:APQ5": APQ5,
-        "MDVP:APQ": APQ,
-        "Shimmer:DDA": DDA,
-        "NHR": NHR,
-        "HNR": HNR,
-        "RPDE": RPDE,
-        "DFA": DFA,
-        "spread1": spread1,
-        "spread2": spread2,
-        "D2": D2,
-        "PPE": PPE,
-        "Diagnosis": diagnosis
-
+        "MDVP_Jitter_percent": MDVP_Jitter_percent,
+        "MDVP_RAP": MDVP_RAP,
+        "MDVP_Shimmer": MDVP_Shimmer,
+        "MDVP_Shimmer_dB": MDVP_Shimmer_dB,
+        "MDVP_APQ": MDVP_APQ,
+        "MDVP_PPQ": MDVP_PPQ,
+        "Shimmer_APQ3": Shimmer_APQ3,
+        "Shimmer_APQ5": Shimmer_APQ5,
     }
 
+    # Convert input data to a numpy array and reshape it
+    input_data_as_numpy_array = np.asarray([MDVP_Jitter_percent, MDVP_RAP, MDVP_Shimmer, MDVP_Shimmer_dB, MDVP_APQ, MDVP_PPQ, Shimmer_APQ3, Shimmer_APQ5])
+    input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
+
+    # Predict using the loaded SVM model
+    prediction = parkinsons_model.predict(input_data_reshaped)
+
+    if prediction[0] == 0:
+        diagnosis = 'The person does not have Parkinsons disease'
+    else:
+        diagnosis = 'The person has Parkinson disease'
+
+    patient_data["Diagnosis"] = diagnosis
+
+    # Insert patient data into the collection (You should define 'parkinsons_collection' somewhere)
     parkinsons_collection.insert_one(patient_data)
 
     return jsonify({"diagnosis": diagnosis})
-
 
 
 
