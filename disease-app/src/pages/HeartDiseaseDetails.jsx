@@ -3,22 +3,19 @@ import AdminMenu from "../layout/AdminMenu";
 import Layout from "../layout/Layout";
 import { Table, Popconfirm, message } from "antd";
 
-
-
-const AdminDashboard = () => {
-
-    const [diabetesData, setDiabetesData] = useState([]);
+const HeartDiseaseDetails = () => {
+    const [heartData, setHeartData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:5000/api/get_all_diabetes_data");
+                const response = await fetch("http://127.0.0.1:5000/api/get_all_heart_data");
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
                 const data = await response.json();
-                console.log("Fetched data:", data); // Log the data to verify the structure
-                setDiabetesData(data.diabetes_data);
+                console.log("Fetched data:", data);
+                setHeartData(data.heart_data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -27,38 +24,34 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-
     const handleDelete = (record) => {
-        const dataId = record._id; // Assuming _id is the correct identifier
-        console.log("Record:", record); //
-        fetch(`http://127.0.0.1:5000/api/delete_diabetes_data/${dataId}`, {
+        const dataId = record._id;
+        console.log("Record:", record);
+        fetch(`http://127.0.0.1:5000/api/delete_heart_data/${dataId}`, {
             method: "DELETE",
         })
             .then((response) => {
                 if (response.ok) {
-                    message.success("Diabetes data deleted successfully");
-                    setDiabetesData((prevData) =>
+                    message.success("Heart data deleted successfully");
+                    setHeartData((prevData) =>
                         prevData.filter((item) => item._id !== dataId)
                     );
                 } else {
-                    message.error("Failed to delete the diabetes data");
+                    message.error("Failed to delete the heart data");
                 }
             })
             .catch((error) => {
-                console.error("Error deleting diabetes data:", error);
-                message.error("An error occurred while deleting the diabetes data.");
+                console.error("Error deleting heart data:", error);
+                message.error("An error occurred while deleting the heart data.");
             });
     };
-
-
-
 
     const columns = [
         {
             title: "Name",
             dataIndex: "Name",
             key: "Name",
-            width: 100,
+            width: '100px',
         },
         {
             title: "Phone",
@@ -76,6 +69,7 @@ const AdminDashboard = () => {
             title: "Diagnosis",
             dataIndex: "Diagnosis",
             key: "Diagnosis",
+            width: 100,
         },
         {
             title: "Age",
@@ -83,39 +77,59 @@ const AdminDashboard = () => {
             key: "Age",
         },
         {
-            title: "BMI",
-            dataIndex: "BMI",
-            key: "BMI",
+            title: "Chest Pain types",
+            dataIndex: "Chest Pain types",
+            key: "Chest Pain types",
         },
         {
-            title: "Glucose",
-            dataIndex: "Glucose",
-            key: "Glucose",
+            title: "Exercise Induced Angina",
+            dataIndex: "Exercise Induced Angina",
+            key: "Exercise Induced Angina",
         },
         {
-            title: "Blood Pressure",
-            dataIndex: "BloodPressure",
-            key: "BloodPressure",
+            title: "Fasting Blood Sugar",
+            dataIndex: "Fasting Blood Sugar",
+            key: "Fasting Blood Sugar",
         },
         {
-            title: "Diabetes Pedigree Function",
-            dataIndex: "DiabetesPedigreeFunction",
-            key: "DiabetesPedigreeFunction",
+            title: "Maximum Heart Rate",
+            dataIndex: "Maximum Heart Rate",
+            key: "Maximum Heart Rate",
         },
         {
-            title: "Insulin",
-            dataIndex: "Insulin",
-            key: "Insulin",
+            title: "Resting Blood Pressure",
+            dataIndex: "Resting Blood Pressure",
+            key: "Resting Blood Pressure",
         },
         {
-            title: "Pregnancies",
-            dataIndex: "Pregnancies",
-            key: "Pregnancies",
+            title: "Resting Electrocardiographic",
+            dataIndex: "Resting Electrocardiographic",
+            key: "Resting Electrocardiographic",
         },
         {
-            title: "Skin Thickness",
-            dataIndex: "SkinThickness",
-            key: "SkinThickness",
+            title: "ST depression induced by exercise",
+            dataIndex: "ST depression induced by exercise",
+            key: "ST depression induced by exercise",
+        },
+        {
+            title: "Serum Cholestoral",
+            dataIndex: "Serum Cholestoral",
+            key: "Serum Cholestoral",
+        },
+        {
+            title: "Sex",
+            dataIndex: "Sex",
+            key: "Sex",
+        },
+        {
+            title: "Slope of the peak exercise ST segment",
+            dataIndex: "Slope of the peak exercise ST segment",
+            key: "Slope of the peak exercise ST segment",
+        },
+        {
+            title: "Thal",
+            dataIndex: "Thal",
+            key: "Thal",
         },
         {
             title: "Action",
@@ -130,11 +144,11 @@ const AdminDashboard = () => {
                 >
                     <button className="bg-red-500 text-white font-bold py-2 px-4 rounded">Delete</button>
                 </Popconfirm>
-
             ),
             width: 100,
         },
     ];
+
 
     return (
         <div>
@@ -163,13 +177,13 @@ const AdminDashboard = () => {
                                         textTransform: 'uppercase',
                                     }}
                                 >
-                                    DIABETES DISEASE patient details
+                                    Heart DISEASE patient details
                                 </h1>
                             </div>
 
                             <div className="'flex items-center justify-center rounded" style={{ overflowX: 'auto' }}>
                                 <Table
-                                    dataSource={diabetesData}
+                                    dataSource={heartData}
                                     columns={columns}
                                     pagination={false}
                                 />
@@ -177,9 +191,9 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
-            </Layout >
-        </div >
+            </Layout>
+        </div>
     );
 };
 
-export default AdminDashboard;
+export default HeartDiseaseDetails;

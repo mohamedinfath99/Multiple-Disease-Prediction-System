@@ -44,7 +44,7 @@ const UserMenu = () => {
       key: 'user_account',
       icon: <OrderedListOutlined />,
       text: 'User Account',
-      link: '#',
+      link: '/userAccount',
       style: { textDecoration: "none", textTransform: 'uppercase', letterSpacing: '2px' },
       iconStyle: "m-3 center-content",
       styleMenu: { width: "90%", marginLeft: "15px" }

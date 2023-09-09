@@ -6,13 +6,17 @@ from pymongo import MongoClient
 import joblib
 import numpy as np
 from functools import wraps
+from bson.objectid import ObjectId
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity #delete code
+
 
 
 app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'RafeekMohamedInfath'
-
+app.config['JWT_SECRET_KEY'] = 'YourSecretKeyHere'  #delete code
+jwt = JWTManager(app) #delete code
 bcrypt = Bcrypt(app)
 CORS(app, supports_credentials=True)
 
@@ -29,6 +33,7 @@ parkinsons_collection = db['parkinsons_collection']
 diabetes_model = joblib.load('svm_diabetes_model.sav')
 heart_model = joblib.load('heart_model.sav')
 parkinsons_model = joblib.load('random_forest_parkinsons_model.sav')
+
 
 
 @app.route("/signup", methods=["POST"])
@@ -67,6 +72,7 @@ def signup():
 
 
 
+
 @app.route("/login", methods=["POST"])
 def login_user():
     email = request.json["email"]
@@ -80,14 +86,19 @@ def login_user():
     if not bcrypt.check_password_hash(user["password"], password):
         return jsonify({"error": "Unauthorized"}), 401
     
+    
+    session["user_id"] = str(user["_id"])
+    access_token = create_access_token(identity=str(user["_id"]))
 
     response = jsonify({
+        "access_token": access_token,
         "id": str(user["_id"]),
         "email": user["email"],
         "userrole": user.get("userrole", "user")
     })
 
     return response
+
 
 
 
@@ -138,7 +149,8 @@ def predict_diabetes():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "An error occurred"}), 500
-    
+
+
 
 
 @app.route("/api/predict_heart", methods=["POST"])
@@ -198,6 +210,8 @@ def predict_heart():
     return jsonify({"diagnosis": diagnosis})
 
 
+
+
 @app.route("/api/predict_parkinsons", methods=["POST"])
 def predict_parkinsons():
     patient_name = request.json["patient_name"]
@@ -249,11 +263,120 @@ def predict_parkinsons():
 
 
 
+
+@jwt_required()
+def get_current_user_id():
+    return session.get("user_id", None)
+
+
+
+
+@app.route("/edit_user", methods=["PUT"])
+def edit_user():
+    try:
+        
+        user_id = get_current_user_id()
+
+        if not user_id:
+            return jsonify({"error": "User not authenticated"}), 401
+
+        user = user_collection.find_one({"_id": ObjectId(user_id)})
+
+        
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+       
+        updated_data = request.json
+
+       
+        if "username" in updated_data:
+            user["username"] = updated_data["username"]
+
+        
+        if "phone_number" in updated_data:
+            user["phone_number"] = updated_data["phone_number"]
+
+       
+        if "password" in updated_data:
+            hashed_password = bcrypt.generate_password_hash(updated_data["password"]).decode('utf-8')
+            user["password"] = hashed_password
+
+      
+        user_collection.update_one({"_id": ObjectId(user_id)}, {"$set": user})
+
+        return jsonify({"message": "User updated successfully"})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred"}), 500
+
+
+
+
+@app.route("/api/get_all_diabetes_data", methods=["GET"])
+def get_all_diabetes_data():
+    try:
+        diabetes_data = list(diabetes_collection.find({}, {"_id": 0}))
+
+        if not diabetes_data:
+            return jsonify({"message": "No diabetes data found"})
+
+        return jsonify({"diabetes_data": diabetes_data})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred"}), 500
+
+
+
+
+@app.route("/api/delete_diabetes_data/<string:data_id>", methods=["DELETE"])
+def delete_diabetes_data(data_id):
+    try:
+        
+        data_id = ObjectId(data_id)
+
+      
+        if not diabetes_collection.find_one({"_id": data_id}):
+            return jsonify({"error": "Diabetes data not found"}), 404
+
+      
+        diabetes_collection.delete_one({"_id": data_id})
+
+        return jsonify({"message": "Diabetes data deleted successfully"})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred"}), 500
+
+
+
+
+@app.route("/api/get_all_heart_data", methods=["GET"])
+def get_all_heart_data():
+    try:
+        heart_data = list(heart_collection.find({}, {"_id": 0}))
+
+        if not heart_data:
+            return jsonify({"message": "No heart data found"})
+
+        return jsonify({"heart_data": heart_data})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred"}), 500
+
+
+
+
 @app.route("/logout", methods=["GET"])
 def logout():
     session.clear()
  
     return jsonify({"message": "Logged out successfully"})
+
+
 
 
 if __name__ == "__main__":

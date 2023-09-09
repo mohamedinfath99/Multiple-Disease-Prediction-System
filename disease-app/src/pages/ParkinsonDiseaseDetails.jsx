@@ -5,7 +5,7 @@ import { Table, Popconfirm, message } from "antd";
 
 
 
-const AdminDashboard = () => {
+const ParkinsonDiseaseDetails = () => {
 
     const [diabetesData, setDiabetesData] = useState([]);
 
@@ -71,11 +71,6 @@ const AdminDashboard = () => {
             dataIndex: "Address",
             key: "Address",
             width: 100,
-        },
-        {
-            title: "Diagnosis",
-            dataIndex: "Diagnosis",
-            key: "Diagnosis",
         },
         {
             title: "Age",
@@ -182,4 +177,4 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+export default ParkinsonDiseaseDetails;
