@@ -111,9 +111,9 @@ def predict_diabetes():
 
         
         if prediction[0] == 1:
-            diagnosis = 'This person is suffering from diabetes'
+            diagnosis = 'This person is suffering from diabetes disease'
         else:
-            diagnosis = 'The person is healthy'
+            diagnosis = 'This person is a healthy person'
 
         
         patient_data = {
@@ -167,9 +167,9 @@ def predict_heart():
     print(f"Prediction result for: {prediction}")
 
     if prediction[0] == 1:
-        diagnosis = 'The person is having heart disease'
+        diagnosis = 'This person is suffering from heart disease'
     else:
-        diagnosis = 'The person is not having heart disease'
+        diagnosis = 'This person is a healthy person'
 
 
 

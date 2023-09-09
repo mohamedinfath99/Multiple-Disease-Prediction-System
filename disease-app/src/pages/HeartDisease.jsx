@@ -1,16 +1,28 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminMenu from "../layout/AdminMenu";
 import Layout from "../layout/Layout";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Modal } from "antd";
+
+
 
 const HeartDisease = () => {
     const [diagnosis, setDiagnosis] = useState("");
     const [form] = Form.useForm();
+    const [modalVisible, setModalVisible] = useState(false);
+
+
+    useEffect(() => {
+        console.log("Diagnosis:", diagnosis);
+        if (diagnosis) {
+            setModalVisible(true);
+        }
+    }, [diagnosis]);
+
+
 
     const onFinish = (values) => {
-        // Send a POST request to your API with the input data
-        fetch("http://127.0.0.1:5000/api/predict_diabetes", {
+        fetch("http://127.0.0.1:5000/api/predict_heart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -19,8 +31,10 @@ const HeartDisease = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log("API Response Data:", data);
                 setDiagnosis(data.diagnosis);
-                message.success(data.diagnosis);
+                console.log("Setting modalVisible to true");
+                setModalVisible(true);
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -104,10 +118,10 @@ const HeartDisease = () => {
 
 
                                         <Form.Item
-                                            label="BMI"
-                                            name="bmi"
+                                            label="Sex"
+                                            name="sex"
                                             rules={[
-                                                { required: true, message: 'Please enter the bmi level!' },
+                                                { required: true, message: 'Please enter the sex level!' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -115,10 +129,10 @@ const HeartDisease = () => {
 
 
                                         <Form.Item
-                                            label="Insulin"
-                                            name="insulin"
+                                            label="Cp"
+                                            name="cp"
                                             rules={[
-                                                { required: true, message: 'Please enter the insulin level' },
+                                                { required: true, message: 'Please enter the cp level' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -126,10 +140,10 @@ const HeartDisease = () => {
 
 
                                         <Form.Item
-                                            label="Glucose Level"
-                                            name="glucose"
+                                            label="Trestbps"
+                                            name="trestbps"
                                             rules={[
-                                                { required: true, message: 'Please enter the glucose level!' },
+                                                { required: true, message: 'Please enter the trestbps!' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -137,10 +151,10 @@ const HeartDisease = () => {
 
 
                                         <Form.Item
-                                            label="Pregnancies"
-                                            name="pregnancies"
+                                            label="Chol"
+                                            name="chol"
                                             rules={[
-                                                { required: true, message: 'Please enter the pregnancies details!' },
+                                                { required: true, message: 'Please enter the chol details!' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -148,21 +162,21 @@ const HeartDisease = () => {
 
 
                                         <Form.Item
-                                            label="Skin Thickness"
-                                            name="skin_thickness"
-                                            rules={[{ required: true, message: 'Please enter the skin thickness!' }]}
+                                            label="Fbs"
+                                            name="fbs"
+                                            rules={[{ required: true, message: 'Please enter the fbs!' }]}
                                         >
                                             <Input type="number" />
                                         </Form.Item>
 
 
                                         <Form.Item
-                                            label="Blood Pressure"
-                                            name="blood_pressure"
+                                            label="Restecg"
+                                            name="restecg"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Please enter the blood pressure!',
+                                                    message: 'Please enter the restecg!',
                                                 },
                                             ]}
                                         >
@@ -171,36 +185,100 @@ const HeartDisease = () => {
 
 
                                         <Form.Item
-                                            label="Diabetes Pedigree"
-                                            name="diabetes_pedigree_function"
-                                            rules={[{ required: true, message: 'Please enter the diabetes pedigree function!' }]}
+                                            label="Thalach"
+                                            name="thalach"
+                                            rules={[{ required: true, message: 'Please enter the thalach function!' }]}
                                         >
                                             <Input type="number" />
                                         </Form.Item>
 
 
 
+                                        <Form.Item
+                                            label="Exang"
+                                            name="exang"
+                                            rules={[{ required: true, message: 'Please enter the exang function!' }]}
+                                        >
+                                            <Input type="number" />
+                                        </Form.Item>
+
+
+
+
+                                        <Form.Item
+                                            label="Oldpeak"
+                                            name="oldpeak"
+                                            rules={[{ required: true, message: 'Please enter the oldpeak function!' }]}
+                                        >
+                                            <Input type="number" />
+                                        </Form.Item>
+
+
+
+
+                                        <Form.Item
+                                            label="Slope"
+                                            name="slope"
+                                            rules={[{ required: true, message: 'Please enter the slope function!' }]}
+                                        >
+                                            <Input type="number" />
+                                        </Form.Item>
+
+
+
+
+                                        <Form.Item
+                                            label="Ca"
+                                            name="ca"
+                                            rules={[{ required: true, message: 'Please enter the ca function!' }]}
+                                        >
+                                            <Input type="number" />
+                                        </Form.Item>
+
+
+                                        <Form.Item
+                                            label="Thal"
+                                            name="thal"
+                                            rules={[{ required: true, message: 'Please enter the thal function!' }]}
+                                        >
+                                            <Input type="number" />
+                                        </Form.Item>
+
+
+
+
                                         <div className="flex justify-center items-center flex-row gap-5">
-                                            <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
-                                                <Button type="primary" htmlType="submit">
+                                            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                                                <Button type="primary" htmlType="submit" style={{ background: "#1a0451", width: '100px' }}>
                                                     Submit
                                                 </Button>
                                             </Form.Item>
 
                                             <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
-                                                <Button type="primary" htmlType="button" onClick={handleReset}>
+                                                <Button type="primary" htmlType="button" style={{ background: "#032b2f", width: '100px' }} onClick={handleReset}>
                                                     Reset
                                                 </Button>
                                             </Form.Item>
                                         </div>
 
-                                        <div >
+                                        <div>
                                             {diagnosis && (
-                                                <div className="text-center mt-6 flex items-center justify-center" style={{ backgroundColor: '#25a9ac', height: '40px' }}>
-                                                    <p style={{ fontSize: '24px', textTransform: 'uppercase' }}>{diagnosis}</p>
-                                                </div>
+                                                <Modal
+                                                    title="Health Status:"
+                                                    visible={modalVisible}
+                                                    onCancel={() => setModalVisible(false)}
+                                                    style={{ marginTop: '200px' }}
+                                                    footer={[
+                                                        <Button key="close" onClick={() => setModalVisible(false)}>
+                                                            Close
+                                                        </Button>
+                                                    ]}
+                                                >
+                                                    <div style={{ maxWidth: '340px', marginTop: '20px', fontSize: '16px', fontWeight: '600', textAlign: 'center', lineHeight: '10px', }}>{diagnosis}</div>
+                                                </Modal>
                                             )}
                                         </div>
+
 
                                     </Form>
 
