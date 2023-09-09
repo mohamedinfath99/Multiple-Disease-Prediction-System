@@ -76,6 +76,14 @@ const AdminDashboard = () => {
             title: "Diagnosis",
             dataIndex: "Diagnosis",
             key: "Diagnosis",
+            width: 200,
+            render: (text) => {
+                return (
+                    <span style={{ color: text.includes("suffering") ? "red" : "green" }}>
+                        {text}
+                    </span>
+                );
+            },
         },
         {
             title: "Age",
@@ -167,11 +175,12 @@ const AdminDashboard = () => {
                                 </h1>
                             </div>
 
-                            <div className="'flex items-center justify-center rounded" style={{ overflowX: 'auto' }}>
+                            <div className="flex items-center justify-center rounded text-center" style={{ overflowX: 'auto' }}>
                                 <Table
                                     dataSource={diabetesData}
                                     columns={columns}
                                     pagination={false}
+                                    style={{ backgroundColor: 'yellow' }}
                                 />
                             </div>
                         </div>

@@ -224,10 +224,15 @@ const DiabetesDisease = () => {
                                                         </Button>
                                                     ]}
                                                 >
-                                                    <div style={{ maxWidth: '300px', marginTop: '20px', fontSize: '18px', fontWeight: '600', textAlign: 'center', lineHeight: '10px', }}>{diagnosis}</div>
+                                                    <div style={{ maxWidth: '600px', marginTop: '20px', fontSize: '18px', fontWeight: '600', textAlign: 'center', lineHeight: '10px' }}>
+                                                        <span style={{ color: diagnosis.includes("suffering") ? "red" : "green" }}>
+                                                            {diagnosis}
+                                                        </span>
+                                                    </div>
                                                 </Modal>
                                             )}
                                         </div>
+
 
                                     </Form>
 

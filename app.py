@@ -370,6 +370,23 @@ def get_all_heart_data():
 
 
 
+
+@app.route("/api/get_all_parkinson_data", methods=["GET"])
+def get_all_parkinson_data():
+    try:
+        parkinsons_data = list(parkinsons_collection.find({}, {"_id": 0}))
+
+        if not parkinsons_data:
+            return jsonify({"message": "No parkinsons data found"})
+
+        return jsonify({"parkinsons_data": parkinsons_data})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred"}), 500
+    
+
+
 @app.route("/logout", methods=["GET"])
 def logout():
     session.clear()

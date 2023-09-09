@@ -51,25 +51,32 @@ const HeartDiseaseDetails = () => {
             title: "Name",
             dataIndex: "Name",
             key: "Name",
-            width: '100px',
+            width: 80,
         },
         {
             title: "Phone",
             dataIndex: "Phone",
             key: "Phone",
-            width: 100,
+            width: 80,
         },
         {
             title: "Address",
             dataIndex: "Address",
             key: "Address",
-            width: 100,
+            width: 80,
         },
         {
             title: "Diagnosis",
             dataIndex: "Diagnosis",
             key: "Diagnosis",
-            width: 100,
+            width: 200,
+            render: (text) => {
+                return (
+                    <span style={{ color: text.includes("suffering") ? "red" : "green" }}>
+                        {text}
+                    </span>
+                );
+            },
         },
         {
             title: "Age",
@@ -181,11 +188,13 @@ const HeartDiseaseDetails = () => {
                                 </h1>
                             </div>
 
-                            <div className="'flex items-center justify-center rounded" style={{ overflowX: 'auto' }}>
+                            <div className="flex items-center justify-center rounded" style={{ overflowX: 'auto', width: '100%' }}>
+
                                 <Table
                                     dataSource={heartData}
                                     columns={columns}
                                     pagination={false}
+                                    style={{ width: '100%' }}
                                 />
                             </div>
                         </div>

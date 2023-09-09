@@ -3,22 +3,19 @@ import AdminMenu from "../layout/AdminMenu";
 import Layout from "../layout/Layout";
 import { Table, Popconfirm, message } from "antd";
 
-
-
 const ParkinsonDiseaseDetails = () => {
-
-    const [diabetesData, setDiabetesData] = useState([]);
+    const [parkinsonData, setParkinsonData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:5000/api/get_all_diabetes_data");
+                const response = await fetch("http://127.0.0.1:5000/api/get_all_parkinson_data"); // Updated API endpoint
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
                 const data = await response.json();
                 console.log("Fetched data:", data); // Log the data to verify the structure
-                setDiabetesData(data.diabetes_data);
+                setParkinsonData(data.parkinsons_data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -27,94 +24,80 @@ const ParkinsonDiseaseDetails = () => {
         fetchData();
     }, []);
 
-
-    const handleDelete = (record) => {
-        const dataId = record._id; // Assuming _id is the correct identifier
-        console.log("Record:", record); //
-        fetch(`http://127.0.0.1:5000/api/delete_diabetes_data/${dataId}`, {
-            method: "DELETE",
-        })
-            .then((response) => {
-                if (response.ok) {
-                    message.success("Diabetes data deleted successfully");
-                    setDiabetesData((prevData) =>
-                        prevData.filter((item) => item._id !== dataId)
-                    );
-                } else {
-                    message.error("Failed to delete the diabetes data");
-                }
-            })
-            .catch((error) => {
-                console.error("Error deleting diabetes data:", error);
-                message.error("An error occurred while deleting the diabetes data.");
-            });
-    };
-
-
-
-
     const columns = [
         {
             title: "Name",
             dataIndex: "Name",
             key: "Name",
-            width: 100,
-        },
-        {
-            title: "Phone",
-            dataIndex: "Phone",
-            key: "Phone",
-            width: 100,
+            width: 200,
         },
         {
             title: "Address",
             dataIndex: "Address",
             key: "Address",
-            width: 100,
+            width: 200,
         },
         {
-            title: "Age",
-            dataIndex: "Age",
-            key: "Age",
+            title: "Phone",
+            dataIndex: "Phone",
+            key: "Phone",
+            width: 200,
         },
         {
-            title: "BMI",
-            dataIndex: "BMI",
-            key: "BMI",
+            title: "Diagnosis",
+            dataIndex: "Diagnosis",
+            key: "Diagnosis",
+            width: 200,
+            render: (text) => {
+                return (
+                    <span style={{ color: text.includes("suffering") ? "red" : "green" }}>
+                        {text}
+                    </span>
+                );
+            },
         },
         {
-            title: "Glucose",
-            dataIndex: "Glucose",
-            key: "Glucose",
+            title: "MDVP_APQ",
+            dataIndex: "MDVP_APQ",
+            key: "MDVP_APQ",
         },
         {
-            title: "Blood Pressure",
-            dataIndex: "BloodPressure",
-            key: "BloodPressure",
+            title: "MDVP_Jitter_percent",
+            dataIndex: "MDVP_Jitter_percent",
+            key: "MDVP_Jitter_percent",
         },
         {
-            title: "Diabetes Pedigree Function",
-            dataIndex: "DiabetesPedigreeFunction",
-            key: "DiabetesPedigreeFunction",
+            title: "MDVP_PPQ",
+            dataIndex: "MDVP_PPQ",
+            key: "MDVP_PPQ",
         },
         {
-            title: "Insulin",
-            dataIndex: "Insulin",
-            key: "Insulin",
+            title: "MDVP_RAP",
+            dataIndex: "MDVP_RAP",
+            key: "MDVP_RAP",
         },
         {
-            title: "Pregnancies",
-            dataIndex: "Pregnancies",
-            key: "Pregnancies",
+            title: "MDVP_Shimmer",
+            dataIndex: "MDVP_Shimmer",
+            key: "MDVP_Shimmer",
         },
         {
-            title: "Skin Thickness",
-            dataIndex: "SkinThickness",
-            key: "SkinThickness",
+            title: "MDVP_Shimmer_dB",
+            dataIndex: "MDVP_Shimmer_dB",
+            key: "MDVP_Shimmer_dB",
+        },
+        {
+            title: "Shimmer_APQ3",
+            dataIndex: "Shimmer_APQ3",
+            key: "Shimmer_APQ3",
+        },
+        {
+            title: "Shimmer_APQ5",
+            dataIndex: "Shimmer_APQ5",
+            key: "Shimmer_APQ5",
         },
         {
             title: "Action",
-            dataIndex: "Action",
             key: "Action",
             render: (text, record) => (
                 <Popconfirm
@@ -125,11 +108,16 @@ const ParkinsonDiseaseDetails = () => {
                 >
                     <button className="bg-red-500 text-white font-bold py-2 px-4 rounded">Delete</button>
                 </Popconfirm>
-
             ),
             width: 100,
         },
     ];
+
+
+    const handleDelete = (record) => {
+        // Implement the delete logic as in your original code
+        // ...
+    };
 
     return (
         <div>
@@ -158,13 +146,13 @@ const ParkinsonDiseaseDetails = () => {
                                         textTransform: 'uppercase',
                                     }}
                                 >
-                                    DIABETES DISEASE patient details
+                                    PARKINSON'S DISEASE Patient Details
                                 </h1>
                             </div>
 
                             <div className="'flex items-center justify-center rounded" style={{ overflowX: 'auto' }}>
                                 <Table
-                                    dataSource={diabetesData}
+                                    dataSource={parkinsonData}
                                     columns={columns}
                                     pagination={false}
                                 />
@@ -172,8 +160,8 @@ const ParkinsonDiseaseDetails = () => {
                         </div>
                     </div>
                 </div>
-            </Layout >
-        </div >
+            </Layout>
+        </div>
     );
 };
 
