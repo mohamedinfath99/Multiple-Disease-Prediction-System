@@ -3,14 +3,49 @@ import React, { useState } from "react";
 import AdminMenu from "../layout/AdminMenu";
 import Layout from "../layout/Layout";
 import { Form, Input, Button, message } from "antd";
+import Cookies from 'js-cookie';
+
 
 
 const DiabetesDisease = () => {
     const [diagnosis, setDiagnosis] = useState("");
     const [form] = Form.useForm();
 
+
+
+
+    // const onFinish = (values) => {
+    //     fetch("http://127.0.0.1:5000/api/predict_diabetes", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(values),
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             setDiagnosis(data.diagnosis);
+    //             message.success(data.diagnosis);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error:", error);
+    //             message.error("An error occurred while making the prediction.");
+    //         });
+    // };
+
+
     const onFinish = (values) => {
-        fetch("http://127.0.0.1:5000/api/predict_diabetes", {
+        const userId = Cookies.get('user_id'); // Retrieve user_id from cookies
+
+        // Check if userId exists, you can add additional error handling as needed
+        if (!userId) {
+            console.error("User ID not found in cookies.");
+            return;
+        }
+
+        const url = `http://127.0.0.1:5000/api/predict_diabetes/${userId}`;
+
+        fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -27,6 +62,8 @@ const DiabetesDisease = () => {
                 message.error("An error occurred while making the prediction.");
             });
     };
+
+
 
 
     const handleReset = () => {

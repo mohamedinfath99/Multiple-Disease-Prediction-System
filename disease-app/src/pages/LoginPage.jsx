@@ -20,42 +20,68 @@ const LoginPage = () => {
 
     const navigate = useNavigate();
 
-    const logInUser = (event) => {
+
+
+    const logInUser = async (event) => {
         event.preventDefault();
 
         if (email.length === 0) {
-            message.error("Gmail is required");
+            message.error("Email is required");
         } else if (password.length === 0) {
             message.error("Password is required");
         } else {
-            axios.post('http://127.0.0.1:5000/login', {
-                email: email,
-                password: password
-            })
-                .then(function (response) {
-                    console.log(response);
-
-                    const userrole = response.data.userrole;
-
-                    if (userrole === "admin") {
-                        message.success("Login successful");
-                        navigate("/adminDashboard");
-                    } else if (userrole === "user") {
-                        message.success("Login successful");
-                        navigate("/diabetesDisease");
-                    } else {
-                        // Handle other cases if needed
-                        // For example, show an error message or navigate to a default route.
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error, 'error');
-                    if (error.response.status === 401) {
-                        message.error("Invalid gmail or password");
-                    }
+            try {
+                const response = await axios.post('http://localhost:5000/login', {
+                    email,
+                    password,
                 });
+
+                if (response.status !== 200) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = response.data;
+
+                const user_id = data.id;
+                const email_id = data.email;
+                const userrole = data.userrole;
+
+
+
+                document.cookie = `user_id=${user_id}; path=/;`;
+                document.cookie = `email=${email_id}; path=/;`;
+                document.cookie = `userrole=${userrole}; path=/;`;
+
+                console.log(data);
+
+
+
+                if (userrole === "admin") {
+                    message.success("Login successful");
+                    navigate("/adminDashboard");
+                } else if (userrole === "user") {
+                    message.success("Login successful");
+                    navigate("/diabetesDisease");
+                } else {
+
+                }
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+
+                if (error.response) {
+                    console.error('Response data:', error.response.data);
+                    console.error('Response status:', error.response.status);
+                }
+
+                if (error.response && error.response.status === 401) {
+                    message.error("Invalid email or password");
+                } else {
+                    message.error("An error occurred while processing your request");
+                }
+            }
         }
     }
+
 
     const [showPassword, setShowPassword] = useState(false);
     // style={{ backgroundImage: `linear-gradient(181.26deg, rgba(176, 189, 231, 0.5) 1.31%, rgba(59, 54, 120, 0.1) 92.36%), url(${loginImg})`, backgroundSize: 'cover' }}

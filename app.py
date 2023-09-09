@@ -4,6 +4,9 @@ from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import joblib
 import numpy as np
+import jwt
+import datetime
+from functools import wraps
 
 
 app = Flask(__name__)
@@ -31,6 +34,38 @@ heart_model = joblib.load('heart_model.sav')
 parkinsons_model = joblib.load('random_forest_parkinsons_model.sav')
 
 
+TOKEN_EXPIRATION_TIME = datetime.timedelta(hours=1)
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+
+        if not token:
+            return jsonify({'message': 'Token is missing'}), 401
+
+        try:
+            data = jwt.decode(token.split(" ")[1], app.config['SECRET_KEY'], algorithms=['HS256'])
+
+            # Check token expiration
+            if data['exp'] < datetime.datetime.utcnow():
+                return jsonify({'message': 'Token has expired'}), 401
+
+            # Store user data in request context
+            request.user_data = data
+
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'message': 'Invalid token'}), 401
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+
+
 
 @app.route("/")
 def hello_world():
@@ -45,7 +80,7 @@ def signup():
     username = request.json.get("username")
     phone_number = request.json.get("phone_number")
 
-    # Set the default userrole to "user"
+    
     userrole = "user"
 
     user_exists = user_collection.find_one({"email": email})
@@ -90,21 +125,60 @@ def login_user():
     if not bcrypt.check_password_hash(user["password"], password):
         return jsonify({"error": "Unauthorized"}), 401
 
-    session["user_id"] = str(user["_id"])
+    # Generate a JWT token
+    payload = {
+        "user_id": str(user["_id"]),
+        "email": user["email"],
+        "userrole": user.get("userrole", "user")
+    }
+    
+    secret_key = "aaaswaqaq789456"  
+    token = jwt.encode(payload, secret_key, algorithm="HS256")
 
-    return jsonify({
+    response = jsonify({
         "id": str(user["_id"]),
         "email": user["email"],
         "userrole": user.get("userrole", "user")
     })
+    
+    # Set the Authorization header
+    response.headers["Authorization"] = f"Bearer {token}"
+
+    # Set cookies
+    response.set_cookie("user_id", str(user["_id"]), path="/", samesite="Lax")
+    response.set_cookie("email", user["email"])
+    response.set_cookie("userrole", user.get("userrole", "user"))
+
+    # Print cookie values for debugging
+    print(f"User ID Cookie: {str(user['_id'])}")
+    print(f"Email Cookie: {user['email']}")
+    print(f"User Role Cookie: {user.get('userrole', 'user')}")
+
+    return response
 
 
 
 
+@app.route("/profile", methods=["GET"])
+def profile():
+    # Retrieve user ID, email, and user role from cookies
+    user_id = request.cookies.get("user_id")
+    email = request.cookies.get("email")
+    user_role = request.cookies.get("userrole")
 
-@app.route("/api/predict_diabetes", methods=["POST"])
-def predict_diabetes():
+    if user_id is not None and email is not None:
+        # You have access to the user's information from the cookies
+        return f"User ID: {user_id}, Email: {email}, User Role: {user_role}"
+    else:
+        # Handle the case where cookies are not set
+        return "Cookies not found, please log in."
 
+
+
+@app.route("/api/predict_diabetes/<string:id>", methods=["POST"])
+def predict_diabetes(id):
+   
+    user_id = id
     patient_name = request.json["patient_name"]
     patient_phone = request.json["patient_phone"]
     patient_address = request.json["patient_address"]
@@ -128,6 +202,7 @@ def predict_diabetes():
 
     
     patient_data = {
+        "UserId": user_id,
         "Name": patient_name,
         "Phone": patient_phone,
         "Address": patient_address,
@@ -141,9 +216,18 @@ def predict_diabetes():
         "Age": age,
         "Diagnosis": diagnosis
     }
+
+
     diabetes_collection.insert_one(patient_data)
 
     return jsonify({"diagnosis": diagnosis})
+
+
+
+
+
+
+
 
 
 
