@@ -1,11 +1,10 @@
+
 from flask import Flask, request, jsonify, session
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import joblib
 import numpy as np
-import jwt
-import datetime
 from functools import wraps
 
 
@@ -13,7 +12,6 @@ app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'RafeekMohamedInfath'
-
 
 bcrypt = Bcrypt(app)
 CORS(app, supports_credentials=True)
@@ -28,49 +26,9 @@ heart_collection = db['heart_collection']
 parkinsons_collection = db['parkinsons_collection']
 
 
-
 diabetes_model = joblib.load('svm_diabetes_model.sav')
 heart_model = joblib.load('heart_model.sav')
 parkinsons_model = joblib.load('random_forest_parkinsons_model.sav')
-
-
-TOKEN_EXPIRATION_TIME = datetime.timedelta(hours=1)
-
-
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.headers.get('Authorization')
-
-        if not token:
-            return jsonify({'message': 'Token is missing'}), 401
-
-        try:
-            data = jwt.decode(token.split(" ")[1], app.config['SECRET_KEY'], algorithms=['HS256'])
-
-            # Check token expiration
-            if data['exp'] < datetime.datetime.utcnow():
-                return jsonify({'message': 'Token has expired'}), 401
-
-            # Store user data in request context
-            request.user_data = data
-
-        except jwt.ExpiredSignatureError:
-            return jsonify({'message': 'Token has expired'}), 401
-        except jwt.InvalidTokenError:
-            return jsonify({'message': 'Invalid token'}), 401
-
-        return f(*args, **kwargs)
-
-    return decorated
-
-
-
-
-@app.route("/")
-def hello_world():
-    return "Hello, World!"
-
 
 
 @app.route("/signup", methods=["POST"])
@@ -80,7 +38,6 @@ def signup():
     username = request.json.get("username")
     phone_number = request.json.get("phone_number")
 
-    
     userrole = "user"
 
     user_exists = user_collection.find_one({"email": email})
@@ -110,8 +67,6 @@ def signup():
 
 
 
-
-
 @app.route("/login", methods=["POST"])
 def login_user():
     email = request.json["email"]
@@ -124,112 +79,66 @@ def login_user():
 
     if not bcrypt.check_password_hash(user["password"], password):
         return jsonify({"error": "Unauthorized"}), 401
-
-    # Generate a JWT token
-    payload = {
-        "user_id": str(user["_id"]),
-        "email": user["email"],
-        "userrole": user.get("userrole", "user")
-    }
     
-    secret_key = "aaaswaqaq789456"  
-    token = jwt.encode(payload, secret_key, algorithm="HS256")
 
     response = jsonify({
         "id": str(user["_id"]),
         "email": user["email"],
         "userrole": user.get("userrole", "user")
     })
-    
-    # Set the Authorization header
-    response.headers["Authorization"] = f"Bearer {token}"
-
-    # Set cookies
-    response.set_cookie("user_id", str(user["_id"]), path="/", samesite="Lax")
-    response.set_cookie("email", user["email"])
-    response.set_cookie("userrole", user.get("userrole", "user"))
-
-    # Print cookie values for debugging
-    print(f"User ID Cookie: {str(user['_id'])}")
-    print(f"Email Cookie: {user['email']}")
-    print(f"User Role Cookie: {user.get('userrole', 'user')}")
 
     return response
 
 
 
-
-@app.route("/profile", methods=["GET"])
-def profile():
-    # Retrieve user ID, email, and user role from cookies
-    user_id = request.cookies.get("user_id")
-    email = request.cookies.get("email")
-    user_role = request.cookies.get("userrole")
-
-    if user_id is not None and email is not None:
-        # You have access to the user's information from the cookies
-        return f"User ID: {user_id}, Email: {email}, User Role: {user_role}"
-    else:
-        # Handle the case where cookies are not set
-        return "Cookies not found, please log in."
-
-
-
-@app.route("/api/predict_diabetes/<string:id>", methods=["POST"])
-def predict_diabetes(id):
-   
-    user_id = id
-    patient_name = request.json["patient_name"]
-    patient_phone = request.json["patient_phone"]
-    patient_address = request.json["patient_address"]
-    pregnancies = float(request.json["pregnancies"])
-    glucose = float(request.json["glucose"])
-    blood_pressure = float(request.json["blood_pressure"])
-    skin_thickness = float(request.json["skin_thickness"])
-    insulin = float(request.json["insulin"])
-    bmi = float(request.json["bmi"])
-    diabetes_pedigree_function = float(request.json["diabetes_pedigree_function"])
-    age = float(request.json["age"])
-
-  
-    prediction = diabetes_model.predict([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]])
+@app.route("/api/predict_diabetes", methods=["POST"])
+def predict_diabetes():
+    try:
+        patient_name = request.json["patient_name"]
+        patient_phone = request.json["patient_phone"]
+        patient_address = request.json["patient_address"]
+        pregnancies = float(request.json["pregnancies"])
+        glucose = float(request.json["glucose"])
+        blood_pressure = float(request.json["blood_pressure"])
+        skin_thickness = float(request.json["skin_thickness"])
+        insulin = float(request.json["insulin"])
+        bmi = float(request.json["bmi"])
+        diabetes_pedigree_function = float(request.json["diabetes_pedigree_function"])
+        age = float(request.json["age"])
 
     
-    if prediction[0] == 1:
-        diagnosis = 'The person is diabetic'
-    else:
-        diagnosis = 'The person is not diabetic'
+        prediction = diabetes_model.predict([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]])
 
+        
+        if prediction[0] == 1:
+            diagnosis = 'This person is suffering from diabetes'
+        else:
+            diagnosis = 'The person is healthy'
+
+        
+        patient_data = {
+            "Name": patient_name,
+            "Phone": patient_phone,
+            "Address": patient_address,
+            "Pregnancies": pregnancies,
+            "Glucose": glucose,
+            "BloodPressure": blood_pressure,
+            "SkinThickness": skin_thickness,
+            "Insulin": insulin,
+            "BMI": bmi,
+            "DiabetesPedigreeFunction": diabetes_pedigree_function,
+            "Age": age,
+            "Diagnosis": diagnosis
+        }
+
+        diabetes_collection.insert_one(patient_data)
+
+        return jsonify({"diagnosis": diagnosis})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred"}), 500
     
-    patient_data = {
-        "UserId": user_id,
-        "Name": patient_name,
-        "Phone": patient_phone,
-        "Address": patient_address,
-        "Pregnancies": pregnancies,
-        "Glucose": glucose,
-        "BloodPressure": blood_pressure,
-        "SkinThickness": skin_thickness,
-        "Insulin": insulin,
-        "BMI": bmi,
-        "DiabetesPedigreeFunction": diabetes_pedigree_function,
-        "Age": age,
-        "Diagnosis": diagnosis
-    }
-
-
-    diabetes_collection.insert_one(patient_data)
-
-    return jsonify({"diagnosis": diagnosis})
-
-
-
-
-
-
-
-
-
 
 
 @app.route("/api/predict_heart", methods=["POST"])
@@ -254,7 +163,7 @@ def predict_heart():
 
     prediction = heart_model.predict([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
 
-    # Print the prediction result to the console
+   
     print(f"Prediction result for: {prediction}")
 
     if prediction[0] == 1:
@@ -289,82 +198,6 @@ def predict_heart():
     return jsonify({"diagnosis": diagnosis})
 
 
-
-
-
-# @app.route("/api/predict_parkinsons", methods=["POST"])
-# def predict_parkinsons():
-
-#     patient_name = request.json["patient_name"]
-#     patient_phone = request.json["patient_phone"]
-#     patient_address = request.json["patient_address"]
-#     fo = float(request.json["MDVP:Fo(Hz)"])
-#     fhi = float(request.json["MDVP:Fhi(Hz)"])
-#     flo = float(request.json["MDVP:Flo(Hz)"])
-#     Jitter_percent = float(request.json["MDVP:Jitter(%)"])
-#     Jitter_Abs = float(request.json["MDVP:Jitter(Abs)"])
-#     RAP = float(request.json["MDVP:RAP"])
-#     PPQ = float(request.json["MDVP:PPQ"])
-#     DDP = float(request.json["Jitter:DDP"])
-#     Shimmer = float(request.json["MDVP:Shimmer"])
-#     Shimmer_dB = float(request.json["MDVP:Shimmer(dB)"])
-#     APQ3 = float(request.json["Shimmer:APQ3"])
-#     APQ5 = float(request.json["Shimmer:APQ5"])
-#     APQ = float(request.json["MDVP:APQ"])
-#     DDA = float(request.json["Shimmer:DDA"])
-#     NHR = float(request.json["NHR"])
-#     HNR = float(request.json["HNR"])
-#     RPDE = float(request.json["RPDE"])
-#     DFA = float(request.json["DFA"])
-#     spread1 = float(request.json["spread1"])
-#     spread2 = float(request.json["spread2"])
-#     D2 = float(request.json["D2"])
-#     PPE = float(request.json["PPE"])
-
-
-#     prediction = parkinsons_model.predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
-
-#     if prediction[0] == 1:
-#         diagnosis = 'The person has Parkinson disease'
-#     else:
-#         diagnosis = 'The person does not have Parkinsons disease'
-
-#     patient_data = {
-#         "Name": patient_name,
-#         "Phone": patient_phone,
-#         "Address": patient_address,
-#         "MDVP:Fo(Hz)": fo,
-#         "MDVP:Fhi(Hz)": fhi,
-#         "MDVP:Flo(Hz)": flo,
-#         "MDVP:Jitter(%)": Jitter_percent,
-#         "MDVP:Jitter(Abs)": Jitter_Abs,
-#         "MDVP:RAP": RAP,
-#         "MDVP:PPQ": PPQ,
-#         "Jitter:DDP": DDP,
-#         "MDVP:Shimmer": Shimmer,
-#         "MDVP:Shimmer(dB)": Shimmer_dB,
-#         "Shimmer:APQ3": APQ3,
-#         "Shimmer:APQ5": APQ5,
-#         "MDVP:APQ": APQ,
-#         "Shimmer:DDA": DDA,
-#         "NHR": NHR,
-#         "HNR": HNR,
-#         "RPDE": RPDE,
-#         "DFA": DFA,
-#         "spread1": spread1,
-#         "spread2": spread2,
-#         "D2": D2,
-#         "PPE": PPE,
-#         "Diagnosis": diagnosis
-
-#     }
-
-#     parkinsons_collection.insert_one(patient_data)
-
-#     return jsonify({"diagnosis": diagnosis})
-
-
-
 @app.route("/api/predict_parkinsons", methods=["POST"])
 def predict_parkinsons():
     patient_name = request.json["patient_name"]
@@ -380,7 +213,7 @@ def predict_parkinsons():
     Shimmer_APQ3 = float(request.json["Shimmer_APQ3"])
     Shimmer_APQ5 = float(request.json["Shimmer_APQ5"])
 
-    # Create a dictionary with the extracted feature values
+   
     patient_data = {
         "Name": patient_name,
         "Phone": patient_phone,
@@ -395,11 +228,11 @@ def predict_parkinsons():
         "Shimmer_APQ5": Shimmer_APQ5,
     }
 
-    # Convert input data to a numpy array and reshape it
+   
     input_data_as_numpy_array = np.asarray([MDVP_Jitter_percent, MDVP_RAP, MDVP_Shimmer, MDVP_Shimmer_dB, MDVP_APQ, MDVP_PPQ, Shimmer_APQ3, Shimmer_APQ5])
     input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
 
-    # Predict using the loaded SVM model
+    
     prediction = parkinsons_model.predict(input_data_reshaped)
 
     if prediction[0] == 0:
@@ -409,12 +242,10 @@ def predict_parkinsons():
 
     patient_data["Diagnosis"] = diagnosis
 
-    # Insert patient data into the collection (You should define 'parkinsons_collection' somewhere)
+  
     parkinsons_collection.insert_one(patient_data)
 
     return jsonify({"diagnosis": diagnosis})
-
-
 
 
 if __name__ == "__main__":

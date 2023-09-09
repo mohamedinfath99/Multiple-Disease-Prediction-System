@@ -1,51 +1,30 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminMenu from "../layout/AdminMenu";
 import Layout from "../layout/Layout";
-import { Form, Input, Button, message } from "antd";
-import Cookies from 'js-cookie';
+import { Form, Input, Button, message, Modal } from "antd";
+
+
 
 
 
 const DiabetesDisease = () => {
     const [diagnosis, setDiagnosis] = useState("");
     const [form] = Form.useForm();
+    const [modalVisible, setModalVisible] = useState(false);
 
 
+    useEffect(() => {
+        console.log("Diagnosis:", diagnosis);
+        if (diagnosis) {
+            setModalVisible(true);
+        }
+    }, [diagnosis]);
 
-
-    // const onFinish = (values) => {
-    //     fetch("http://127.0.0.1:5000/api/predict_diabetes", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(values),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             setDiagnosis(data.diagnosis);
-    //             message.success(data.diagnosis);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error:", error);
-    //             message.error("An error occurred while making the prediction.");
-    //         });
-    // };
 
 
     const onFinish = (values) => {
-        const userId = Cookies.get('user_id'); // Retrieve user_id from cookies
-
-        // Check if userId exists, you can add additional error handling as needed
-        if (!userId) {
-            console.error("User ID not found in cookies.");
-            return;
-        }
-
-        const url = `http://127.0.0.1:5000/api/predict_diabetes/${userId}`;
-
-        fetch(url, {
+        fetch("http://127.0.0.1:5000/api/predict_diabetes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,16 +33,16 @@ const DiabetesDisease = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log("API Response Data:", data);
                 setDiagnosis(data.diagnosis);
-                message.success(data.diagnosis);
+                console.log("Setting modalVisible to true");
+                setModalVisible(true);
             })
             .catch((error) => {
                 console.error("Error:", error);
                 message.error("An error occurred while making the prediction.");
             });
     };
-
-
 
 
     const handleReset = () => {
@@ -219,24 +198,34 @@ const DiabetesDisease = () => {
 
 
                                         <div className="flex justify-center items-center flex-row gap-5">
-                                            <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
-                                                <Button type="primary" htmlType="submit">
+                                            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                                                <Button type="primary" htmlType="submit" style={{ background: "#1a0451", width: '100px' }}>
                                                     Submit
                                                 </Button>
                                             </Form.Item>
 
                                             <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
-                                                <Button type="primary" htmlType="button" onClick={handleReset}>
+                                                <Button type="primary" htmlType="button" style={{ background: "#032b2f", width: '100px' }} onClick={handleReset}>
                                                     Reset
                                                 </Button>
                                             </Form.Item>
                                         </div>
 
-                                        <div >
+                                        <div>
                                             {diagnosis && (
-                                                <div className="text-center mt-6 flex items-center justify-center" style={{ backgroundColor: '#25a9ac', height: '40px' }}>
-                                                    <p style={{ fontSize: '24px', textTransform: 'uppercase' }}>{diagnosis}</p>
-                                                </div>
+                                                <Modal
+                                                    title="Health Status:"
+                                                    visible={modalVisible}
+                                                    onCancel={() => setModalVisible(false)}
+                                                    style={{ marginTop: '200px' }}
+                                                    footer={[
+                                                        <Button key="close" onClick={() => setModalVisible(false)}>
+                                                            Close
+                                                        </Button>
+                                                    ]}
+                                                >
+                                                    <div style={{ maxWidth: '300px', marginTop: '20px', fontSize: '18px', fontWeight: '600', textAlign: 'center', lineHeight: '10px', }}>{diagnosis}</div>
+                                                </Modal>
                                             )}
                                         </div>
 
