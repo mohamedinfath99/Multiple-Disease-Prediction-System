@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import AdminMenu from "../layout/AdminMenu";
+import UserMenu from "../layout/UserMenu";
 import Layout from "../layout/Layout";
 import { Form, Input, Button, message, Modal } from "antd";
 
@@ -53,7 +53,7 @@ const HeartDisease = () => {
                     <div className="container mx-auto px-4 py-8 md:py-16">
                         <div className="md:flex">
                             <div className="md:w-1/4 mb-4 mr-3">
-                                <AdminMenu />
+                                <UserMenu />
                             </div>
 
                             <div className="items-center justify-center flex-col md:w-3/4 rounded">

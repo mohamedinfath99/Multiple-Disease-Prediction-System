@@ -236,9 +236,9 @@ def predict_parkinsons():
     prediction = parkinsons_model.predict(input_data_reshaped)
 
     if prediction[0] == 0:
-        diagnosis = 'The person does not have Parkinsons disease'
+        diagnosis = 'This person is suffering from Parkinson disease'
     else:
-        diagnosis = 'The person has Parkinson disease'
+        diagnosis = 'This person is a healthy person'
 
     patient_data["Diagnosis"] = diagnosis
 
@@ -246,6 +246,14 @@ def predict_parkinsons():
     parkinsons_collection.insert_one(patient_data)
 
     return jsonify({"diagnosis": diagnosis})
+
+
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.clear()
+ 
+    return jsonify({"message": "Logged out successfully"})
 
 
 if __name__ == "__main__":

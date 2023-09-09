@@ -1,17 +1,27 @@
 
-import React, { useState } from "react";
-import AdminMenu from "../layout/AdminMenu";
+import React, { useEffect, useState } from "react";
+import UserMenu from "../layout/UserMenu";
 import Layout from "../layout/Layout";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Modal } from "antd";
+
 
 
 const ParkinsonDisease = () => {
     const [diagnosis, setDiagnosis] = useState("");
     const [form] = Form.useForm();
+    const [modalVisible, setModalVisible] = useState(false);
+
+
+    useEffect(() => {
+        console.log("Diagnosis:", diagnosis);
+        if (diagnosis) {
+            setModalVisible(true);
+        }
+    }, [diagnosis]);
+
 
     const onFinish = (values) => {
-        // Send a POST request to your API with the input data
-        fetch("http://127.0.0.1:5000/api/predict_diabetes", {
+        fetch("http://127.0.0.1:5000/api/predict_parkinsons", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -20,8 +30,10 @@ const ParkinsonDisease = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log("API Response Data:", data);
                 setDiagnosis(data.diagnosis);
-                message.success(data.diagnosis);
+                console.log("Setting modalVisible to true");
+                setModalVisible(true);
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -42,7 +54,7 @@ const ParkinsonDisease = () => {
                     <div className="container mx-auto px-4 py-8 md:py-16">
                         <div className="md:flex">
                             <div className="md:w-1/4 mb-4 mr-3">
-                                <AdminMenu />
+                                <UserMenu />
                             </div>
 
 
@@ -99,19 +111,19 @@ const ParkinsonDisease = () => {
 
 
                                         <Form.Item
-                                            label="Age"
-                                            name="age"
-                                            rules={[{ required: true, message: 'Please enter the age!' }]}
+                                            label="MDVP_Jitter_percent"
+                                            name="MDVP_Jitter_percent"
+                                            rules={[{ required: true, message: 'Please enter the MDVP_Jitter_percent!' }]}
                                         >
                                             <Input type="number" />
                                         </Form.Item>
 
 
                                         <Form.Item
-                                            label="BMI"
-                                            name="bmi"
+                                            label="MDVP_RAP"
+                                            name="MDVP_RAP"
                                             rules={[
-                                                { required: true, message: 'Please enter the bmi level!' },
+                                                { required: true, message: 'Please enter the MDVP_RAP level!' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -119,10 +131,10 @@ const ParkinsonDisease = () => {
 
 
                                         <Form.Item
-                                            label="Insulin"
-                                            name="insulin"
+                                            label="MDVP_Shimmer"
+                                            name="MDVP_Shimmer"
                                             rules={[
-                                                { required: true, message: 'Please enter the insulin level' },
+                                                { required: true, message: 'Please enter the MDVP_Shimmer level' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -130,10 +142,10 @@ const ParkinsonDisease = () => {
 
 
                                         <Form.Item
-                                            label="Glucose Level"
-                                            name="glucose"
+                                            label="MDVP_Shimmer_dB"
+                                            name="MDVP_Shimmer_dB"
                                             rules={[
-                                                { required: true, message: 'Please enter the glucose level!' },
+                                                { required: true, message: 'Please enter the MDVP_Shimmer_dB!' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -141,10 +153,10 @@ const ParkinsonDisease = () => {
 
 
                                         <Form.Item
-                                            label="Pregnancies"
-                                            name="pregnancies"
+                                            label="MDVP_APQ"
+                                            name="MDVP_APQ"
                                             rules={[
-                                                { required: true, message: 'Please enter the pregnancies details!' },
+                                                { required: true, message: 'Please enter the MDVP_APQ details!' },
                                             ]}
                                         >
                                             <Input type="number" />
@@ -152,21 +164,21 @@ const ParkinsonDisease = () => {
 
 
                                         <Form.Item
-                                            label="Skin Thickness"
-                                            name="skin_thickness"
-                                            rules={[{ required: true, message: 'Please enter the skin thickness!' }]}
+                                            label="MDVP_PPQ"
+                                            name="MDVP_PPQ"
+                                            rules={[{ required: true, message: 'Please enter the MDVP_PPQ!' }]}
                                         >
                                             <Input type="number" />
                                         </Form.Item>
 
 
                                         <Form.Item
-                                            label="Blood Pressure"
-                                            name="blood_pressure"
+                                            label="Shimmer_APQ3"
+                                            name="Shimmer_APQ3"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Please enter the blood pressure!',
+                                                    message: 'Please enter the Shimmer_APQ3!',
                                                 },
                                             ]}
                                         >
@@ -175,9 +187,9 @@ const ParkinsonDisease = () => {
 
 
                                         <Form.Item
-                                            label="Diabetes Pedigree"
-                                            name="diabetes_pedigree_function"
-                                            rules={[{ required: true, message: 'Please enter the diabetes pedigree function!' }]}
+                                            label="Shimmer_APQ5"
+                                            name="Shimmer_APQ5"
+                                            rules={[{ required: true, message: 'Please enter the Shimmer_APQ5 function!' }]}
                                         >
                                             <Input type="number" />
                                         </Form.Item>
@@ -185,24 +197,34 @@ const ParkinsonDisease = () => {
 
 
                                         <div className="flex justify-center items-center flex-row gap-5">
-                                            <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
-                                                <Button type="primary" htmlType="submit">
+                                            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                                                <Button type="primary" htmlType="submit" style={{ background: "#1a0451", width: '100px' }}>
                                                     Submit
                                                 </Button>
                                             </Form.Item>
 
                                             <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
-                                                <Button type="primary" htmlType="button" onClick={handleReset}>
+                                                <Button type="primary" htmlType="button" style={{ background: "#032b2f", width: '100px' }} onClick={handleReset}>
                                                     Reset
                                                 </Button>
                                             </Form.Item>
                                         </div>
 
-                                        <div >
+                                        <div>
                                             {diagnosis && (
-                                                <div className="text-center mt-6 flex items-center justify-center" style={{ backgroundColor: '#25a9ac', height: '40px' }}>
-                                                    <p style={{ fontSize: '24px', textTransform: 'uppercase' }}>{diagnosis}</p>
-                                                </div>
+                                                <Modal
+                                                    title="Health Status:"
+                                                    visible={modalVisible}
+                                                    onCancel={() => setModalVisible(false)}
+                                                    style={{ marginTop: '200px' }}
+                                                    footer={[
+                                                        <Button key="close" onClick={() => setModalVisible(false)}>
+                                                            Close
+                                                        </Button>
+                                                    ]}
+                                                >
+                                                    <div style={{ maxWidth: '400px', marginTop: '20px', fontSize: '18px', fontWeight: '600', textAlign: 'center', lineHeight: '10px', }}>{diagnosis}</div>
+                                                </Modal>
                                             )}
                                         </div>
 
