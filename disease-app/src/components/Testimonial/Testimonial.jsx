@@ -38,7 +38,7 @@ const Testimonial = () => {
                         <div className='py-[30px] px-5 rounded-3'>
                             <div className='flex items-center gap-[13px]'>
                                 <div>
-                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Mohamed Infath</h4>
+                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Dilshan</h4>
                                     <div className='flex items-center gap-[2px]'>
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
@@ -49,7 +49,7 @@ const Testimonial = () => {
                                 </div>
                             </div>
 
-                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'> "I have taken medical services from them. They treat so well and they are providing the best medical services."</p>
+                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'>  "For my first appointment, I brought the requested documents, and the process was smooth. They even accommodated my busy schedule."</p>
 
                         </div>
                     </SwiperSlide>
@@ -59,7 +59,7 @@ const Testimonial = () => {
                         <div className='py-[30px] px-5 rounded-3'>
                             <div className='flex items-center gap-[13px]'>
                                 <div>
-                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Mohamed Infath</h4>
+                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Lakshan</h4>
                                     <div className='flex items-center gap-[2px]'>
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
@@ -70,7 +70,7 @@ const Testimonial = () => {
                                 </div>
                             </div>
 
-                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'> "I have taken medical services from them. They treat so well and they are providing the best medical services."</p>
+                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'> "I had an excellent experience making an appointment. The staff was very helpful, and the online scheduling system was user-friendly."</p>
 
                         </div>
                     </SwiperSlide>
@@ -80,7 +80,7 @@ const Testimonial = () => {
                         <div className='py-[30px] px-5 rounded-3'>
                             <div className='flex items-center gap-[13px]'>
                                 <div>
-                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Mohamed Infath</h4>
+                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Bhanuka Silva </h4>
                                     <div className='flex items-center gap-[2px]'>
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
@@ -91,7 +91,7 @@ const Testimonial = () => {
                                 </div>
                             </div>
 
-                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'> "I have taken medical services from them. They treat so well and they are providing the best medical services."</p>
+                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'> "I was pleased to find that the clinic accepts a wide range of insurance plans, making it convenient for me to access quality healthcare."</p>
 
                         </div>
                     </SwiperSlide>
@@ -102,7 +102,7 @@ const Testimonial = () => {
                         <div className='py-[30px] px-5 rounded-3'>
                             <div className='flex items-center gap-[13px]'>
                                 <div>
-                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Mohamed Infath</h4>
+                                    <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>Chamara Fernando</h4>
                                     <div className='flex items-center gap-[2px]'>
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
                                         <HiStar className=" text-yellowColor w-[18px] h-5" />
@@ -113,7 +113,7 @@ const Testimonial = () => {
                                 </div>
                             </div>
 
-                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'> "I have taken medical services from them. They treat so well and they are providing the best medical services."</p>
+                            <p className='text-[16px] leading-7 mt-4 text-textColor font-[400]'>"Requesting a prescription refill was hassle-free. I appreciate the convenience of being able to do it online through their patient portal."</p>
 
                         </div>
                     </SwiperSlide>

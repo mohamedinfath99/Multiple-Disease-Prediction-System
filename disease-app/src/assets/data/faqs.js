@@ -1,27 +1,27 @@
 export const faqs = [
   {
-    question: "What is your medical care?",
+    question: "How can I make an appointment?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "You can easily make an appointment by calling our office during business hours or using our online appointment scheduling system on our website. We offer convenient options to suit your needs.",
   },
   {
-    question: "What happens if I need to go a hospital?",
+    question: "What insurance plans do you accept?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "We accept a wide range of insurance plans to ensure access to quality healthcare. Please contact our office or check our website for the most up-to-date list of accepted insurance providers.",
   },
   {
-    question: "What happens if I need to go a hospital?",
+    question: "What should I bring to my first appointment?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "For your first appointment, please bring a valid photo ID, your insurance card, a list of your current medications, and any relevant medical records or referrals from other healthcare providers.",
   },
   {
-    question: "Can I visit your medical office?",
+    question: "How can I request a prescription refill?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "You can request a prescription refill by contacting our office during regular business hours. If you have an online patient portal account, you may also be able to request refills electronically.",
   },
   {
-    question: "Does you provide urgent care?",
+    question: "What do I do in case of a medical emergency?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "In the event of a medical emergency, please call 911 or go to the nearest emergency room. If you require immediate assistance or have questions about non-life-threatening issues, you can contact our office during business hours.",
   },
 ];

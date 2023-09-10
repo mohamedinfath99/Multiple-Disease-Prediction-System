@@ -55,11 +55,11 @@ const RegisterPage = () => {
                 });
         }
     };
-    // style={{ backgroundImage: `linear-gradient(181.26deg, rgba(176, 189, 231, 0.5) 1.31%, rgba(59, 54, 120, 0.1) 92.36%), url(${loginImg})`, backgroundSize: 'cover' }}
+
     return (
         <div className=" flex flex-col items-center justify-center bg-cover" style={{ marginTop: '90px', marginBottom: '90px' }}>
 
-            <div className="bg-opacity-80 p-8 rounded-lg shadow-md max-w-md w-full" style={{ backgroundColor: 'rgba(236, 228, 228, 0.78)', width: 'min(calc(100% - 30px), 840px)', marginInline: 'auto', height: 'min(calc(100% - 30px), 476px)' }}>
+            <div className="bg-opacity-80 p-8 rounded-lg shadow-md max-w-md w-full" style={{ backgroundColor: 'rgba(186, 202, 207, 0.78)', width: 'min(calc(100% - 30px), 840px)', marginInline: 'auto', height: 'min(calc(100% - 30px), 476px)' }}>
 
                 <h1 className="roboto-heading text-center" style={{ color: '#2D6FD1', textTransform: 'uppercase', fontWeight: '800', fontSize: '35px', lineHeight: '46.88px' }}>MediLand Hospital</h1>
                 <p className="inter-heading text-center mt-2 mb-7" style={{ color: '#2D6FD1', textTransform: 'uppercase', fontWeight: '500', fontSize: '24px', lineHeight: '29.05px' }}>Register now</p>
