@@ -1,5 +1,6 @@
 
-from flask import Flask, request, jsonify, session
+
+from flask import Flask, request, jsonify, session, make_response
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
@@ -7,7 +8,7 @@ import joblib
 import numpy as np
 from functools import wraps
 from bson.objectid import ObjectId
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity #delete code
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
 
 
@@ -15,8 +16,8 @@ app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'RafeekMohamedInfath'
-app.config['JWT_SECRET_KEY'] = 'YourSecretKeyHere'  #delete code
-jwt = JWTManager(app) #delete code
+app.config['JWT_SECRET_KEY'] = 'YourSecretKeyHere'
+jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 CORS(app, supports_credentials=True)
 
@@ -30,9 +31,9 @@ heart_collection = db['heart_collection']
 parkinsons_collection = db['parkinsons_collection']
 
 
-diabetes_model = joblib.load('svm_diabetes_model.sav')
+diabetes_model = joblib.load('diabetes_model.sav')
 heart_model = joblib.load('heart_model.sav')
-parkinsons_model = joblib.load('random_forest_parkinsons_model.sav')
+parkinsons_model = joblib.load('parkinsons_model.sav')
 
 
 
@@ -384,14 +385,16 @@ def get_all_parkinson_data():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "An error occurred"}), 500
-    
 
 
 @app.route("/logout", methods=["GET"])
 def logout():
-    session.clear()
- 
-    return jsonify({"message": "Logged out successfully"})
+   
+    response = make_response(jsonify({"message": "Logged out successfully"}))
+    response.delete_cookie("userrole")
+    response.delete_cookie("email")
+    response.delete_cookie("user_id")
+    return response
 
 
 

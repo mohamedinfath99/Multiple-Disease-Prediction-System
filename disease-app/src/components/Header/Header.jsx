@@ -1,8 +1,9 @@
-// import userImg from '../../assets/images/avatar-icon.png';
-import { NavLink, Link } from 'react-router-dom'
-import { BiMenu } from 'react-icons/bi'
+import userImg from '../../assets/images/1111.png';
+import { NavLink, Link } from 'react-router-dom';
+import { BiMenu } from 'react-icons/bi';
 import { useEffect, useRef } from 'react';
-import '../../App.css'
+import Cookies from 'js-cookie';
+import '../../App.css';
 
 const navLinks = [
     {
@@ -21,34 +22,36 @@ const navLinks = [
         path: '/contact',
         display: 'Contact'
     },
-]
+];
 
 
 const Header = () => {
 
-    const headerRef = useRef(null)
-    const menuRef = useRef(null)
+    const headerRef = useRef(null);
+    const menuRef = useRef(null);
+
+    const isLoggedIn = Cookies.get('user_id');
 
     const handleStickyHeader = () => {
         window.addEventListener('scroll', () => {
             if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add('sticky__header')
+                headerRef.current.classList.add('sticky__header');
             }
             else {
-                headerRef.current.classList.remove('sticky__header')
+                headerRef.current.classList.remove('sticky__header');
             }
-        })
+        });
     };
 
 
     useEffect(() => {
-        handleStickyHeader()
+        handleStickyHeader();
 
-        return () => window.removeEventListener('scroll', handleStickyHeader)
+        return () => window.removeEventListener('scroll', handleStickyHeader);
     });
 
 
-    const toggleMenu = () => menuRef.current.classList.toggle('show_menu')
+    const toggleMenu = () => menuRef.current.classList.toggle('show_menu');
 
     return (
         <header className='header flex items-center' ref={headerRef}>
@@ -80,18 +83,16 @@ const Header = () => {
 
 
                     <div className='flex items-center gap-4'>
-                        <div className='hidden'>
-                            <Link>
-                                <figure className='w-[35px] h-[35px] rounded-full'>
-                                    {/* <img src={userImg} alt='image' className='w-full rounded-full cursor-pointer' /> */}
-                                </figure>
+
+                        {!isLoggedIn ? (
+                            <Link to='/login'>
+                                <button className='bg-primaryColor py-2 px-6 text-white font-[600 h-[44px] flex items-center justify-center rounded-[50px]'>Login</button>
                             </Link>
-                        </div>
-
-
-                        <Link to='/login'>
-                            <button className='bg-primaryColor py-2 px-6 text-white font-[600 h-[44px] flex items-center justify-center rounded-[50px]'>Login</button>
-                        </Link>
+                        ) : (
+                            <Link to='/profile'>
+                                <img src={userImg} alt='User Profile' className='w-[35px] h-[35px] rounded-full cursor-pointer' />
+                            </Link>
+                        )}
 
 
                         <span className='md:hidden' onClick={toggleMenu}>
@@ -105,7 +106,7 @@ const Header = () => {
                 </div>
             </div>
         </header>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

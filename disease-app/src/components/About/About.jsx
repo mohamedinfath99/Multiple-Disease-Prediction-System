@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import aboutImg from '../../assets/images/about.jpg';
 
 
@@ -22,7 +22,7 @@ const About = () => {
 
                         <p className="text__para mt-[30px]">"For two consecutive years, we've proudly maintained our position as a premier healthcare institution, specializing in outstanding patient treatment."</p>
 
-                        <Link to='/'><button className="btn">Learn More</button></Link>
+                        {/* <Link to='/'><button className="btn">Learn More</button></Link> */}
                     </div>
 
                 </div>

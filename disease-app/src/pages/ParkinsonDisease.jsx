@@ -109,94 +109,102 @@ const ParkinsonDisease = () => {
                                         <br />
                                         <br />
 
+                                        <div className='container' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <div className='left-column' style={{ flex: 1, padding: '5px' }}>
 
-                                        <Form.Item
-                                            label="MDVP_Jitter_percent"
-                                            name="MDVP_Jitter_percent"
-                                            rules={[{ required: true, message: 'Please enter the MDVP_Jitter_percent!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
-
-
-                                        <Form.Item
-                                            label="MDVP_RAP"
-                                            name="MDVP_RAP"
-                                            rules={[
-                                                { required: true, message: 'Please enter the MDVP_RAP level!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="MDVP Percent"
+                                                    name="MDVP_Jitter_percent"
+                                                    rules={[{ required: true, message: 'Please enter the MDVP_Jitter_percent!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="MDVP_Shimmer"
-                                            name="MDVP_Shimmer"
-                                            rules={[
-                                                { required: true, message: 'Please enter the MDVP_Shimmer level' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="MDVP RAP"
+                                                    name="MDVP_RAP"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the MDVP_RAP level!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="MDVP_Shimmer_dB"
-                                            name="MDVP_Shimmer_dB"
-                                            rules={[
-                                                { required: true, message: 'Please enter the MDVP_Shimmer_dB!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="MDVP Shimer"
+                                                    name="MDVP_Shimmer"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the MDVP_Shimmer level' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="MDVP_APQ"
-                                            name="MDVP_APQ"
-                                            rules={[
-                                                { required: true, message: 'Please enter the MDVP_APQ details!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="MDVP DB"
+                                                    name="MDVP_Shimmer_dB"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the MDVP_Shimmer_dB!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
+
+                                            </div>
+
+                                            <div style={{ flex: 1, padding: '5px' }}>
 
 
-                                        <Form.Item
-                                            label="MDVP_PPQ"
-                                            name="MDVP_PPQ"
-                                            rules={[{ required: true, message: 'Please enter the MDVP_PPQ!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="MDVP APQ"
+                                                    name="MDVP_APQ"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the MDVP_APQ details!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Shimmer_APQ3"
-                                            name="Shimmer_APQ3"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please enter the Shimmer_APQ3!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="MDVP PPQ"
+                                                    name="MDVP_PPQ"
+                                                    rules={[{ required: true, message: 'Please enter the MDVP_PPQ!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Shimmer_APQ5"
-                                            name="Shimmer_APQ5"
-                                            rules={[{ required: true, message: 'Please enter the Shimmer_APQ5 function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Shimer APQ3"
+                                                    name="Shimmer_APQ3"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: 'Please enter the Shimmer_APQ3!',
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
+                                                <Form.Item
+                                                    label="Shimer APQ5"
+                                                    name="Shimmer_APQ5"
+                                                    rules={[{ required: true, message: 'Please enter the Shimmer_APQ5 function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
-                                        <div className="flex justify-center items-center flex-row gap-5">
+                                            </div>
+
+                                        </div>
+
+                                        <div className="flex justify-center items-center flex-row gap-5 mt-5">
                                             <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                                                 <Button type="primary" htmlType="submit" style={{ background: "#1a0451", width: '100px' }}>
                                                     Submit

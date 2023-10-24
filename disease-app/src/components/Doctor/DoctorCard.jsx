@@ -31,16 +31,16 @@ const DoctorCard = ({ doctor }) => {
                     </div>
                 </div>
 
-                <div className='mt-[18px] lg:mt-5 flex items-center justify-between'>
+                <div className='mt-[18px] lg:mt-5 flex items-center'>
                     <div>
                         <h3 className='text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor'>
                             +{totalPatients} patients
                         </h3>
                     </div>
 
-                    <Link to='/doctor' style={{ marginLeft: '180px' }} className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E]  mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'>
+                    {/* <Link to='/doctor' style={{ marginLeft: '180px' }} className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E]  mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none'>
                         <BsArrowRight className='group-hover:text-white w-6 h-5' />
-                    </Link>
+                    </Link> */}
                 </div>
             </div >
         </div>

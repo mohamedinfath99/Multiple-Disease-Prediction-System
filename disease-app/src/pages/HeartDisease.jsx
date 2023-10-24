@@ -107,147 +107,152 @@ const HeartDisease = () => {
                                         <br />
                                         <br />
 
+                                        <div className='container' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <div className='left-column' style={{ flex: 1, padding: '5px' }}>
 
-                                        <Form.Item
-                                            label="Age"
-                                            name="age"
-                                            rules={[{ required: true, message: 'Please enter the age!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
-
-
-                                        <Form.Item
-                                            label="Sex"
-                                            name="sex"
-                                            rules={[
-                                                { required: true, message: 'Please enter the sex level!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Age"
+                                                    name="age"
+                                                    rules={[{ required: true, message: 'Please enter the age!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Cp"
-                                            name="cp"
-                                            rules={[
-                                                { required: true, message: 'Please enter the cp level' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Sex"
+                                                    name="sex"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the sex level!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Trestbps"
-                                            name="trestbps"
-                                            rules={[
-                                                { required: true, message: 'Please enter the trestbps!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Chest Pain"
+                                                    name="cp"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the cp level' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Chol"
-                                            name="chol"
-                                            rules={[
-                                                { required: true, message: 'Please enter the chol details!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Trestbps"
+                                                    name="trestbps"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the trestbps!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Fbs"
-                                            name="fbs"
-                                            rules={[{ required: true, message: 'Please enter the fbs!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Chol"
+                                                    name="chol"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the chol details!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Restecg"
-                                            name="restecg"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please enter the restecg!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Fbs"
+                                                    name="fbs"
+                                                    rules={[{ required: true, message: 'Please enter the fbs!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Thalach"
-                                            name="thalach"
-                                            rules={[{ required: true, message: 'Please enter the thalach function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Restecg"
+                                                    name="restecg"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: 'Please enter the restecg!',
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
+                                            </div>
 
-
-
-                                        <Form.Item
-                                            label="Exang"
-                                            name="exang"
-                                            rules={[{ required: true, message: 'Please enter the exang function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                            <div style={{ flex: 1, padding: '5px' }}>
+                                                <Form.Item
+                                                    label="Thalach"
+                                                    name="thalach"
+                                                    rules={[{ required: true, message: 'Please enter the thalach function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
 
-
-                                        <Form.Item
-                                            label="Oldpeak"
-                                            name="oldpeak"
-                                            rules={[{ required: true, message: 'Please enter the oldpeak function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Exang"
+                                                    name="exang"
+                                                    rules={[{ required: true, message: 'Please enter the exang function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
 
 
-                                        <Form.Item
-                                            label="Slope"
-                                            name="slope"
-                                            rules={[{ required: true, message: 'Please enter the slope function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Oldpeak"
+                                                    name="oldpeak"
+                                                    rules={[{ required: true, message: 'Please enter the oldpeak function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
 
 
-                                        <Form.Item
-                                            label="Ca"
-                                            name="ca"
-                                            rules={[{ required: true, message: 'Please enter the ca function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
-
-
-                                        <Form.Item
-                                            label="Thal"
-                                            name="thal"
-                                            rules={[{ required: true, message: 'Please enter the thal function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Slope"
+                                                    name="slope"
+                                                    rules={[{ required: true, message: 'Please enter the slope function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
 
 
-                                        <div className="flex justify-center items-center flex-row gap-5">
+                                                <Form.Item
+                                                    label="Ca"
+                                                    name="ca"
+                                                    rules={[{ required: true, message: 'Please enter the ca function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
+
+
+                                                <Form.Item
+                                                    label="Thal"
+                                                    name="thal"
+                                                    rules={[{ required: true, message: 'Please enter the thal function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div className="flex justify-center items-center flex-row gap-5 mt-5">
                                             <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                                                 <Button type="primary" htmlType="submit" style={{ background: "#1a0451", width: '100px' }}>
                                                     Submit

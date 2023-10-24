@@ -60,21 +60,33 @@ const AdminMenu = () => {
         },
     ];
 
+    // const handleLogout = () => {
+    //     fetch("http://127.0.0.1:5000/logout", {
+    //         method: "GET",
+    //         credentials: "include",
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             message.success("Logout successful");
+    //             window.location.href = "/login";
+    //             message.success("Logout successful");
+    //         })
+    //         .catch((error) => {
+    //             console.error("Logout Error:", error);
+    //         });
+    // };
+
+
     const handleLogout = () => {
-        fetch("http://127.0.0.1:5000/logout", {
-            method: "GET",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                message.success("Logout successful");
-                window.location.href = "/login";
-                message.success("Logout successful");
-            })
-            .catch((error) => {
-                console.error("Logout Error:", error);
-            });
+        document.cookie = "userrole=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        window.location.href = "/login";
+
+        message.success("Logout successful");
     };
+
 
     return (
         <>

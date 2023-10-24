@@ -23,8 +23,8 @@ const Layout = ({ children, title, description, keywords, author }) => {
 };
 
 Layout.defaultProps = {
-    title: "Demo Project",
-    description: "Demo Project",
+    title: "Multiple Disease Prediction System",
+    description: "Multiple Disease Prediction System",
     keywords: "Project",
     author: "RM.Infath",
 };

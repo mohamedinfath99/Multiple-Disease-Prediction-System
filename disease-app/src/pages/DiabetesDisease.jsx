@@ -80,124 +80,131 @@ const DiabetesDisease = () => {
                                         style={{ paddingTop: "40px" }}
                                     >
 
-                                        <Form.Item
-                                            label="Patient Name"
-                                            name="patient_name"
-                                            rules={[{ required: true, message: 'Please enter patient name!' }]}
+                                        <div>
+                                            <Form.Item
+                                                label="Patient Name"
+                                                name="patient_name"
+                                                rules={[{ required: true, message: 'Please enter patient name!' }]}
 
-                                        >
-                                            <Input />
-                                        </Form.Item>
-
-
-                                        <Form.Item
-                                            label="Patient Phone"
-                                            name="patient_phone"
-                                            rules={[{ required: true, message: 'Please enter patient phone!' }]}
-                                        >
-                                            <Input />
-                                        </Form.Item>
+                                            >
+                                                <Input />
+                                            </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Patient Address"
-                                            name="patient_address"
-                                            rules={[{ required: true, message: 'Please enter patient address!' }]}
-                                        >
-                                            <Input />
-                                        </Form.Item>
+                                            <Form.Item
+                                                label="Patient Phone"
+                                                name="patient_phone"
+                                                rules={[{ required: true, message: 'Please enter patient phone!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+
+
+                                            <Form.Item
+                                                label="Patient Address"
+                                                name="patient_address"
+                                                rules={[{ required: true, message: 'Please enter patient address!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
 
                                         <br />
                                         <br />
 
 
-                                        <Form.Item
-                                            label="Age"
-                                            name="age"
-                                            rules={[{ required: true, message: 'Please enter the age!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                        <div className='container' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <div className='left-column' style={{ flex: 1, padding: '5px' }}>
+                                                <Form.Item
+                                                    label="Age"
+                                                    name="age"
+                                                    rules={[{ required: true, message: 'Please enter the age!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="BMI"
-                                            name="bmi"
-                                            rules={[
-                                                { required: true, message: 'Please enter the bmi level!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="BMI"
+                                                    name="bmi"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the bmi level!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Insulin"
-                                            name="insulin"
-                                            rules={[
-                                                { required: true, message: 'Please enter the insulin level' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Insulin"
+                                                    name="insulin"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the insulin level' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Glucose Level"
-                                            name="glucose"
-                                            rules={[
-                                                { required: true, message: 'Please enter the glucose level!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Glucose"
+                                                    name="glucose"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the glucose level!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
+                                            </div>
+
+                                            <div style={{ flex: 1, padding: '5px' }}>
+
+                                                <Form.Item
+                                                    label="Pregnancies"
+                                                    name="pregnancies"
+                                                    rules={[
+                                                        { required: true, message: 'Please enter the pregnancies details!' },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Pregnancies"
-                                            name="pregnancies"
-                                            rules={[
-                                                { required: true, message: 'Please enter the pregnancies details!' },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Skin Thickness"
+                                                    name="skin_thickness"
+                                                    rules={[{ required: true, message: 'Please enter the skin thickness!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Skin Thickness"
-                                            name="skin_thickness"
-                                            rules={[{ required: true, message: 'Please enter the skin thickness!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Blood Pressure"
+                                                    name="blood_pressure"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: 'Please enter the blood pressure!',
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
 
 
-                                        <Form.Item
-                                            label="Blood Pressure"
-                                            name="blood_pressure"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please enter the blood pressure!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
+                                                <Form.Item
+                                                    label="Pedigree"
+                                                    name="diabetes_pedigree_function"
+                                                    rules={[{ required: true, message: 'Please enter the diabetes pedigree function!' }]}
+                                                >
+                                                    <Input type="number" />
+                                                </Form.Item>
+                                            </div>
 
+                                        </div>
 
-                                        <Form.Item
-                                            label="Diabetes Pedigree"
-                                            name="diabetes_pedigree_function"
-                                            rules={[{ required: true, message: 'Please enter the diabetes pedigree function!' }]}
-                                        >
-                                            <Input type="number" />
-                                        </Form.Item>
-
-
-
-                                        <div className="flex justify-center items-center flex-row gap-5">
+                                        <div className="flex justify-center items-center flex-row gap-5 mt-5">
                                             <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                                                 <Button type="primary" htmlType="submit" style={{ background: "#1a0451", width: '100px' }}>
                                                     Submit

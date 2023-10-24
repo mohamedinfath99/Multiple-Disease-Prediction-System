@@ -31,7 +31,10 @@ const Home = () => {
                                     We are a leading healthcare institution dedicated to providing specialized care and treatment to enhance the health and happiness of our community.
                                 </p>
 
-                                <button className='btn'>Request an Appointment</button>
+                                {/* <button className='btn'>Request an Appointment</button> */}
+                                <br />
+                                <br />
+
 
                             </div>
 
