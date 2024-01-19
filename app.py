@@ -15,14 +15,14 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, ge
 app = Flask(__name__)
 
 
-app.config['SECRET_KEY'] = 'RafeekMohamedInfath'
-app.config['JWT_SECRET_KEY'] = 'YourSecretKeyHere'
+app.config['SECRET_KEY'] = 'Your Secret Key Type Here'
+app.config['JWT_SECRET_KEY'] = 'Your Secret Key Type Here'
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 CORS(app, supports_credentials=True)
 
 
-mongo_uri = "mongodb+srv://finalProject:finalProject@cluster0.vk1vlvz.mongodb.net/?retryWrites=true&w=majority"
+mongo_uri = "Your MongoDB URL Type Here"
 client = MongoClient(mongo_uri)
 db = client['FinalProject']
 user_collection = db['users']
